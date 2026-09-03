@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Details | Lightora</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/orders.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <div class="page-header">
+
+            <h1>
+                Order Details
+            </h1>
+
+            <button
+                id="backBtn"
+                type="button"
+            >
+                ← Back to Orders
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             ORDER INFORMATION
+        ========================== -->
+
+        <div class="order-details-card">
+
+
+            <h2>
+                Order Information
+            </h2>
+
+
+            <div class="order-info-grid">
+
+
+                <div class="info-item">
+
+                    <span>
+                        Order ID
+                    </span>
+
+                    <strong id="orderId">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong id="orderStatus">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Date
+                    </span>
+
+                    <strong id="orderDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="orderTotal">
+                        0 DA
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             CUSTOMER INFORMATION
+        ========================== -->
+
+        <div class="order-details-card">
+
+            <h2>
+                Customer Information
+            </h2>
+
+
+            <div class="order-info-grid">
+
+
+                <div class="info-item">
+
+                    <span>
+                        Customer Name
+                    </span>
+
+                    <strong id="customerName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong id="customerPhone">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Wilaya
+                    </span>
+
+                    <strong id="customerWilaya">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        Address
+                    </span>
+
+                    <strong id="customerAddress">
+                        -
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    Notes
+                </span>
+
+                <p id="customerNotes">
+                    -
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCTS
+        ========================== -->
+
+        <div class="order-details-card">
+
+            <h2>
+                Products
+            </h2>
+
+
+            <div id="orderProducts">
+
+                Loading products...
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ACTIONS
+        ========================== -->
+
+        <div class="order-actions">
+
+            <button
+                id="completeBtn"
+                type="button"
+            >
+                ✓ Complete Order
+            </button>
+
+
+            <button
+                id="deleteBtn"
+                type="button"
+            >
+                🗑 Delete Order
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script
+        type="module"
+        src="../js/order-details.js"
+    ></script>
+
+    <script
+    type="module"
+    src="../js/authGuard.js">
+</script>
+</body>
+
+</html>

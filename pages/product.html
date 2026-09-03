@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Product | Lightora</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/global.css">
+
+        <link
+        rel="stylesheet"
+        href="../css/products.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="store-header">
+
+        <div class="logo">
+
+            <h2>LIGHTORA</h2>
+
+        </div>
+
+
+        <nav>
+
+            <a href="store.html">
+                Home
+            </a>
+
+            <a href="store.html#products">
+                Shop
+            </a>
+
+            <a href="cart.html">
+
+                🛒 Cart
+
+                <span id="cartCount">
+                    0
+                </span>
+
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- PRODUCT -->
+
+    <main class="product-page">
+
+        <!-- IMAGE -->
+
+        <div class="product-image">
+
+            <img
+                id="productImage"
+                src="../images/perfume.jpg"
+                alt="Product">
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="product-info">
+
+            <p
+                id="productCategory"
+                class="category">
+
+                Loading...
+
+            </p>
+
+
+            <h1 id="productName">
+
+                Loading product...
+
+            </h1>
+
+
+            <h2 id="productPrice">
+
+                0 DA
+
+            </h2>
+
+
+            <p id="productDescription">
+
+                Loading product description...
+
+            </p>
+
+
+            <!-- STOCK -->
+
+            <div class="stock">
+
+                Stock:
+
+                <span id="productStock">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="quantity">
+
+                <button
+                    type="button"
+                    id="decreaseQuantity">
+
+                    −
+
+                </button>
+
+
+                <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1">
+
+
+                <button
+                    type="button"
+                    id="increaseQuantity">
+
+                    +
+
+                </button>
+
+            </div>
+
+
+            <small
+                id="maxQuantityMessage"
+                class="max-quantity-message">
+
+            </small>
+
+
+            <!-- BUY NOW -->
+
+            <button
+                type="button"
+                id="buyNowBtn"
+                class="buy-now-btn">
+
+                Buy Now
+
+            </button>
+
+
+            <!-- ADD TO CART -->
+
+            <button
+                type="button"
+                id="addToCartBtn"
+                class="buy-btn">
+
+                Add to Cart
+
+            </button>
+
+
+            <!-- BACK -->
+
+            <a
+                href="store.html"
+                class="back-link">
+
+                ← Back to Store
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script
+    type="module"
+    src="../js/products.js">
+</script>
+
+</body>
+
+</html>

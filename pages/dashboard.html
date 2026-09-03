@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Lightora</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/global.css">
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css">
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+    <h2>
+        Lightora
+    </h2>
+
+
+    <ul>
+
+        <li>
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+        </li>
+
+
+        <li>
+            <a href="products.html">
+                📦 Products
+            </a>
+        </li>
+
+
+        <li>
+            <a href="add-product.html">
+                ➕ Add Product
+            </a>
+        </li>
+
+
+        <li>
+            <a href="orders.html">
+                🛒 Orders
+            </a>
+        </li>
+
+
+        <li>
+            <a href="analytics.html">
+                📊 Analytics
+            </a>
+        </li>
+
+
+        <li>
+            <a href="settings.html">
+                ⚙ Settings
+            </a>
+            <li>
+    <button
+        id="logoutBtn"
+        type="button"
+        class="logout-btn">
+
+        🚪 Logout
+
+    </button>
+</li>
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<div class="main-content">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                Lightora Seller Dashboard
+            </h1>
+
+            <p>
+                Manage your store and orders
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         TODAY'S MISSION
+    ========================== -->
+
+    <div class="top-section">
+
+
+        <div class="mission-card">
+
+            <div class="mission-header">
+
+                <h2>
+                    🎯 Today's Mission
+                </h2>
+
+                <span class="mission-badge">
+                    Day 1
+                </span>
+
+            </div>
+
+
+            <ul>
+
+                <li>
+                    ✅ Add your first product
+                </li>
+
+                <li>
+                    ⬜ Upload product images
+                </li>
+
+                <li>
+                    ⬜ Complete your store profile
+                </li>
+
+            </ul>
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress"
+                    style="width: 33%;">
+                </div>
+
+            </div>
+
+
+            <div class="mission-footer">
+
+                <span>
+                    Progress
+                </span>
+
+                <strong>
+                    33%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             STORE SCORE
+        ========================== -->
+
+        <div class="score-card">
+
+            <h2>
+                🚀 Store Score
+            </h2>
+
+            <h1>
+                84
+            </h1>
+
+            <p>
+                Excellent
+            </p>
+
+
+            <div class="score-bar">
+
+                <div
+                    class="score-progress"
+                    style="width: 84%;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         STATISTICS
+    ========================== -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h3 id="productsCount">
+                    0
+                </h3>
+
+                <p>
+                    Total Products
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🛒
+            </div>
+
+            <div>
+
+                <h3 id="ordersCount">
+                    0
+                </h3>
+
+                <p>
+                    Total Orders
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div>
+
+                <h3 id="revenueCount">
+                    0 DA
+                </h3>
+
+                <p>
+                    Total Revenue
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3 id="customersCount">
+                    0
+                </h3>
+
+                <p>
+                    Customers
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         RECENT ORDERS
+    ========================== -->
+
+    <div class="dashboard-section">
+
+
+        <div class="section-header">
+
+            <h2>
+                Recent Orders
+            </h2>
+
+
+            <a href="orders.html">
+                View All
+            </a>
+
+        </div>
+
+
+
+        <table class="recent-orders">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Order ID
+                    </th>
+
+                    <th>
+                        Customer
+                    </th>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Total
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="recentOrdersBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================
+     DASHBOARD JS
+========================= -->
+
+<script
+    type="module"
+    src="../js/dashboard.js">
+</script>
+
+<script
+    type="module"
+    src="../js/authGuard.js">
+</script>
+<script type="module">
+
+    import { auth } from "../firebase.js";
+
+    import {
+        signOut
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+    const logoutBtn =
+        document.getElementById(
+            "logoutBtn"
+        );
+
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await signOut(auth);
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+                    alert(
+                        "Could not logout."
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+<script
+    type="module"
+    src="../js/authGuard.js">
+</script>
+</body>
+
+</html>

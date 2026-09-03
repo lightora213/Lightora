@@ -1,0 +1,55 @@
+.customers-table{
+
+    width:100%;
+    
+    border-collapse:collapse;
+    
+    background:white;
+    
+    border-radius:18px;
+    
+    overflow:hidden;
+    
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    
+    }
+    
+    .customers-table th{
+    
+    background:#f5f6fb;
+    
+    padding:18px;
+    
+    text-align:left;
+    
+    }
+    
+    .customers-table td{
+    
+    padding:18px;
+    
+    border-top:1px solid #ececec;
+    
+    }
+    
+    .avatar{
+    
+    width:45px;
+    
+    height:45px;
+    
+    border-radius:50%;
+    
+    display:flex;
+    
+    align-items:center;
+    
+    justify-content:center;
+    
+    background:#6c4cff;
+    
+    color:white;
+    
+    font-weight:bold;
+    
+    }

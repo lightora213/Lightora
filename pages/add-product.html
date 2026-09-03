@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Product | Lightora</title>
+
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/add-product.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Add New Product</h1>
+
+<form id="productForm">
+
+<div class="form-group">
+
+<label>Product Name</label>
+
+<input
+type="text"
+id="productName"
+placeholder="Luxury Perfume">
+
+</div>
+
+<div class="form-group">
+
+<label>Price</label>
+
+<input
+type="number"
+id="productPrice"
+placeholder="12000">
+
+</div>
+
+<div class="form-group">
+
+<label>Stock</label>
+
+<input
+type="number"
+id="productStock"
+placeholder="25">
+
+</div>
+
+<div class="form-group">
+
+<label>Category</label>
+
+<select id="productCategory">
+
+<option>Perfume</option>
+
+<option>Gift Box</option>
+
+<option>Accessories</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Description</label>
+
+<textarea
+id="productDescription"
+rows="6"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>Upload Image</label>
+
+<input
+type="file"
+id="productImage">
+
+</div>
+
+<button type="submit">
+
+Save Product
+
+</button>
+
+</form>
+
+</div>
+
+<script type="module" src="../js/add-product.js"></script>
+<script
+    type="module"
+    src="../js/add-product.js">
+</script>
+<script
+    type="module"
+    src="../js/authGuard.js">
+</script>
+
+</body>
+
+</html>

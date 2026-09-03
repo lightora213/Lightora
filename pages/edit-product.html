@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Edit Product | Lightora</title>
+
+<link rel="stylesheet"
+      href="../css/global.css">
+
+<link rel="stylesheet"
+      href="../css/add-product.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edit Product</h1>
+
+    <form id="editProductForm">
+
+        <div class="form-group">
+
+            <label for="productName">
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="productName"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productPrice">
+                Price
+            </label>
+
+            <input
+                type="number"
+                id="productPrice"
+                min="0"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productStock">
+                Stock
+            </label>
+
+            <input
+                type="number"
+                id="productStock"
+                min="0"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productCategory">
+                Category
+            </label>
+
+            <select id="productCategory">
+
+                <option value="Perfume">
+                    Perfume
+                </option>
+
+                <option value="Gift Box">
+                    Gift Box
+                </option>
+
+                <option value="Accessories">
+                    Accessories
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productDescription">
+                Description
+            </label>
+
+            <textarea
+                id="productDescription"
+                rows="6"
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productStatus">
+                Status
+            </label>
+
+            <select id="productStatus">
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="inactive">
+                    Inactive
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            type="submit"
+            id="saveProductBtn"
+        >
+            💾 Save Changes
+        </button>
+
+
+        <button
+            type="button"
+            id="cancelBtn"
+        >
+            Cancel
+        </button>
+
+
+        <p id="editProductMessage"></p>
+
+    </form>
+
+</div>
+
+
+<script
+    type="module"
+    src="../js/edit-product.js"
+></script>
+<script
+    type="module"
+    src="../js/authGuard.js">
+</script>
+</body>
+
+</html>

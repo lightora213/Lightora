@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Lightora</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/global.css">
+
+    <link
+        rel="stylesheet"
+        href="../css/checkout.css">
+
+</head>
+
+
+<body>
+
+
+<header class="checkout-header">
+
+    <div class="checkout-logo">
+        LIGHTORA
+    </div>
+
+
+    <nav class="checkout-nav">
+
+        <a href="store.html">
+            Home
+        </a>
+
+        <a href="store.html#products">
+            Shop
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="checkout-page">
+
+
+    <h1>
+        Checkout
+    </h1>
+
+
+
+    <!-- =========================
+     ORDER
+========================== -->
+
+<section class="checkout-card order-card">
+
+    <div class="section-title">
+
+        <h2>
+            Your Order
+        </h2>
+
+        <p class="order-subtitle">
+            Review your products and adjust quantities before placing your order.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         CHECKOUT PRODUCTS
+    ========================== -->
+
+    <div
+        id="checkoutItems"
+        class="checkout-items">
+
+        <div class="loading-checkout">
+
+            Loading your products...
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOTAL
+    ========================== -->
+
+    <div class="checkout-total-row">
+
+        <span>
+            Total
+        </span>
+
+        <strong id="checkoutTotal">
+            0 DA
+        </strong>
+
+    </div>
+
+</section>
+
+    <!-- =========================
+         CUSTOMER INFORMATION
+    ========================== -->
+
+    <section class="checkout-card">
+
+        <div class="section-title">
+
+            <h2>
+                Customer Information
+            </h2>
+
+        </div>
+
+
+
+        <form id="checkoutForm">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Your full name"
+                    autocomplete="name"
+                    required>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="05 XX XX XX XX"
+                    autocomplete="tel"
+                    required>
+
+            </div>
+
+
+
+            <!-- WILAYA -->
+
+            <div class="form-group">
+
+                <label for="wilaya">
+                    Wilaya
+                </label>
+
+                <input
+                    type="text"
+                    id="wilaya"
+                    placeholder="Algiers"
+                    required>
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-group">
+
+                <label for="address">
+                    Delivery Address
+                </label>
+
+                <textarea
+                    id="address"
+                    placeholder="Your complete delivery address"
+                    required></textarea>
+
+            </div>
+
+
+
+            <!-- NOTES -->
+
+            <div class="form-group">
+
+                <label for="notes">
+                    Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    placeholder="Optional notes"></textarea>
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="checkoutMessage"
+                class="checkout-message">
+            </div>
+
+
+
+            <!-- PLACE ORDER -->
+
+            <button
+                type="submit"
+                id="placeOrderBtn"
+                class="place-order-btn">
+
+                Place Order
+
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+
+<script
+    type="module"
+    src="../js/checkout.js">
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+.orders-table{
+
+    width:100%;
+    
+    border-collapse:collapse;
+    
+    background:white;
+    
+    border-radius:15px;
+    
+    overflow:hidden;
+    
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    
+    }
+    
+    .orders-table th{
+    
+    background:#f5f6fb;
+    
+    padding:18px;
+    
+    text-align:left;
+    
+    }
+    
+    .orders-table td{
+    
+    padding:18px;
+    
+    border-top:1px solid #ececec;
+    
+    }
+    
+    .pending{
+    
+    background:#fff3cd;
+    
+    color:#856404;
+    
+    padding:5px 12px;
+    
+    border-radius:20px;
+    
+    }
+    
+    .completed{
+    
+    background:#d4edda;
+    
+    color:#155724;
+    
+    padding:5px 12px;
+    
+    border-radius:20px;
+    
+    }
+    
+    .cancelled{
+    
+    background:#f8d7da;
+    
+    color:#721c24;
+    
+    padding:5px 12px;
+    
+    border-radius:20px;
+    
+    }
