@@ -18,9 +18,22 @@ import {
 // LIGHTORA SELLER
 // ======================================================
 
-// هذا هو UID الحقيقي للحساب المسجل حاليًا
 const SELLER_UID =
     "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+
+
+// ======================================================
+// SERVICE TEST
+// ======================================================
+
+console.log(
+    "========== LIGHTORA ORDER SERVICE V2 =========="
+);
+
+console.log(
+    "SELLER_UID:",
+    SELLER_UID
+);
 
 
 // ======================================================
@@ -47,14 +60,6 @@ export async function createOrder(order) {
         );
 
     }
-
-
-    /*
-       الزبون لا يحتاج إلى حساب.
-
-       الطلبية مرتبطة بحساب البائع
-       Lightora.
-    */
 
     const orderData = {
 
@@ -120,10 +125,13 @@ export async function getOrders() {
 
 
     console.log(
+        "========== GET ORDERS =========="
+    );
+
+    console.log(
         "Current Firebase UID:",
         user.uid
     );
-
 
     console.log(
         "Expected seller UID:",
@@ -131,15 +139,18 @@ export async function getOrders() {
     );
 
 
-    /*
-       التأكد من أن الحساب الحالي
-       هو حساب البائع.
-    */
+    // ==================================================
+    // CHECK SELLER
+    // ==================================================
 
     if (
         user.uid !==
         SELLER_UID
     ) {
+
+        console.error(
+            "UID MISMATCH!"
+        );
 
         throw new Error(
             "You are not authorized to view orders."
@@ -148,10 +159,9 @@ export async function getOrders() {
     }
 
 
-    /*
-       جلب الطلبات التي sellerId فيها
-       يساوي UID البائع.
-    */
+    // ==================================================
+    // QUERY ORDERS
+    // ==================================================
 
     const ordersQuery =
         query(
@@ -176,20 +186,30 @@ export async function getOrders() {
     );
 
 
-    return snapshot.docs.map(
-        function(document) {
+    const orders =
+        snapshot.docs.map(
+            function(document) {
 
-            return {
+                return {
 
-                id:
-                    document.id,
+                    id:
+                        document.id,
 
-                ...document.data()
+                    ...document.data()
 
-            };
+                };
 
-        }
+            }
+        );
+
+
+    console.log(
+        "Orders:",
+        orders
     );
+
+
+    return orders;
 
 }
 
