@@ -18,9 +18,9 @@ import {
 // LIGHTORA SELLER
 // ======================================================
 
-// UID حساب البائع الذي يملك متجر Lightora
+// هذا هو UID الحقيقي للحساب المسجل حاليًا
 const SELLER_UID =
-    "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+    "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
 
 
 // ======================================================
@@ -50,10 +50,10 @@ export async function createOrder(order) {
 
 
     /*
-       الزبون لا يحتاج إلى تسجيل الدخول.
+       الزبون لا يحتاج إلى حساب.
 
-       كل طلبية في متجر Lightora
-       مرتبطة بحساب البائع.
+       الطلبية مرتبطة بحساب البائع
+       Lightora.
     */
 
     const orderData = {
@@ -119,26 +119,27 @@ export async function getOrders() {
     }
 
 
+    console.log(
+        "Current Firebase UID:",
+        user.uid
+    );
+
+
+    console.log(
+        "Expected seller UID:",
+        SELLER_UID
+    );
+
+
     /*
-       يجب أن يكون الحساب الحالي
-       هو حساب بائع Lightora.
+       التأكد من أن الحساب الحالي
+       هو حساب البائع.
     */
 
     if (
         user.uid !==
         SELLER_UID
     ) {
-
-        console.error(
-            "Current Firebase UID:",
-            user.uid
-        );
-
-        console.error(
-            "Expected seller UID:",
-            SELLER_UID
-        );
-
 
         throw new Error(
             "You are not authorized to view orders."
@@ -147,14 +148,9 @@ export async function getOrders() {
     }
 
 
-    console.log(
-        "Loading orders for seller:",
-        SELLER_UID
-    );
-
-
     /*
-       جلب طلبات متجر Lightora فقط.
+       جلب الطلبات التي sellerId فيها
+       يساوي UID البائع.
     */
 
     const ordersQuery =
@@ -263,11 +259,6 @@ export async function getOrder(id) {
         snapshot.data();
 
 
-    /*
-       تأكد أن الطلبية
-       تخص متجر Lightora.
-    */
-
     if (
         data.sellerId !==
         SELLER_UID
@@ -359,11 +350,6 @@ export async function updateOrder(
 
     }
 
-
-    /*
-       لا تسمح بتعديل طلبية
-       تخص بائعًا آخر.
-    */
 
     if (
         snapshot.data().sellerId !==
@@ -480,11 +466,6 @@ export async function deleteOrder(
 
     }
 
-
-    /*
-       لا تسمح بحذف طلبية
-       تخص بائعًا آخر.
-    */
 
     if (
         snapshot.data().sellerId !==
