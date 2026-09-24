@@ -15,18 +15,16 @@ import {
 
 
 // ======================================================
-// LIGHTORA STORE
+// LIGHTORA SELLER
 // ======================================================
 
-const LIGHTORA_STORE_ID =
+// UID حساب البائع الثاني
+const SELLER_UID =
     "ozeREirMKKWr0XCC8cpHFTsgm7p2";
 
-const SELLER_UID =
-    "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
-
 
 // ======================================================
-// COLLECTION
+// ORDERS COLLECTION
 // ======================================================
 
 const ordersCollection =
@@ -42,17 +40,31 @@ const ordersCollection =
 
 export async function createOrder(order) {
 
+    if (!order) {
+
+        throw new Error(
+            "Order data is missing."
+        );
+
+    }
+
+
+    /*
+       الزبون لا يحتاج إلى حساب.
+
+       كل طلبية خاصة بمتجر Lightora
+       لذلك نضع UID البائع مباشرة.
+    */
+
     const orderData = {
 
         ...order,
 
         sellerId:
-            LIGHTORA_STORE_ID,
+            SELLER_UID,
 
         sellerIds:
-            Array.isArray(order.sellerIds)
-                ? order.sellerIds
-                : [LIGHTORA_STORE_ID],
+            [SELLER_UID],
 
         status:
             order.status ||
@@ -62,6 +74,12 @@ export async function createOrder(order) {
             serverTimestamp()
 
     };
+
+
+    console.log(
+        "Creating order:",
+        orderData
+    );
 
 
     const orderReference =
@@ -101,7 +119,11 @@ export async function getOrders() {
     }
 
 
-    // تأكد أن الحساب هو حساب Lightora
+    /*
+       يجب أن يكون الحساب الحالي
+       هو حساب البائع الثاني.
+    */
+
     if (
         user.uid !==
         SELLER_UID
@@ -114,9 +136,9 @@ export async function getOrders() {
     }
 
 
-    // مهم:
-    // الطلبات محفوظة بـ sellerId الخاص بالمتجر
-    // وليس UID الخاص بحساب Firebase
+    /*
+       جلب الطلبات الخاصة بهذا البائع فقط.
+    */
 
     const ordersQuery =
         query(
@@ -124,7 +146,7 @@ export async function getOrders() {
             where(
                 "sellerId",
                 "==",
-                LIGHTORA_STORE_ID
+                SELLER_UID
             )
         );
 
@@ -136,7 +158,7 @@ export async function getOrders() {
 
 
     return snapshot.docs.map(
-        function (document) {
+        function(document) {
 
             return {
 
@@ -209,9 +231,14 @@ export async function getOrder(id) {
         snapshot.data();
 
 
+    /*
+       تأكد أن الطلبية تخص
+       هذا البائع.
+    */
+
     if (
         data.sellerId !==
-        LIGHTORA_STORE_ID
+        SELLER_UID
     ) {
 
         throw new Error(
@@ -292,9 +319,13 @@ export async function updateOrder(
     }
 
 
+    /*
+       لا تسمح بتعديل طلبية بائع آخر.
+    */
+
     if (
         snapshot.data().sellerId !==
-        LIGHTORA_STORE_ID
+        SELLER_UID
     ) {
 
         throw new Error(
@@ -399,9 +430,14 @@ export async function deleteOrder(
     }
 
 
+    /*
+       لا تسمح بحذف طلبية
+       لا تخص هذا البائع.
+    */
+
     if (
         snapshot.data().sellerId !==
-        LIGHTORA_STORE_ID
+        SELLER_UID
     ) {
 
         throw new Error(

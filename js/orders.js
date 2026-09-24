@@ -113,8 +113,8 @@ async function loadOrders() {
 
 
         console.log(
-            "Orders user:",
-            user.email
+            "Orders user UID:",
+            user.uid
         );
 
 
@@ -126,21 +126,36 @@ async function loadOrders() {
             await getOrders();
 
 
-        /* =========================
-           CURRENT SELLER ORDERS
-        ========================= */
+        console.log(
+            "Orders received:",
+            allOrders
+        );
+
+
+        /*
+         * IMPORTANT
+         *
+         * getOrders() already filters
+         * the orders using LIGHTORA_STORE_ID.
+         *
+         * DO NOT filter again using
+         * user.uid because:
+         *
+         * user.uid =
+         * I7tUxQVRH5e5R0XDVQwSGXb8m6x1
+         *
+         * while the store sellerId =
+         * ozeREirMKKWr0XCC8cpHFTsgm7p2
+         */
 
         orders =
-            allOrders.filter(
-                function(order) {
+            allOrders;
 
-                    return (
-                        order.sellerId ===
-                        user.uid
-                    );
 
-                }
-            );
+        console.log(
+            "Orders displayed:",
+            orders.length
+        );
 
 
         renderOrders();
