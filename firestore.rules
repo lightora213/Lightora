@@ -5,12 +5,10 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // =====================================================
-    // LIGHTORA ACCOUNT
+    // SELLER
     // =====================================================
 
-    // Firebase Authentication UID
-    // الخاص بحساب صاحب المتجر
-    function isLightoraSeller() {
+    function isSeller() {
       return request.auth != null
         && request.auth.uid == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
     }
@@ -22,23 +20,20 @@ service cloud.firestore {
 
     match /products/{productId} {
 
-      // الزبائن يستطيعون رؤية المنتجات
+      // الزوار والزبائن يستطيعون رؤية المنتجات
       allow read: if true;
 
-      // صاحب المتجر يستطيع إضافة منتج
-      allow create: if isLightoraSeller()
-        && request.resource.data.sellerId
-          == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+      // البائع يستطيع إضافة منتج
+      allow create: if isSeller()
+        && request.resource.data.sellerId == request.auth.uid;
 
-      // صاحب المتجر يستطيع تعديل منتجاته
-      allow update: if isLightoraSeller()
-        && resource.data.sellerId
-          == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+      // البائع يستطيع تعديل منتجاته فقط
+      allow update: if isSeller()
+        && resource.data.sellerId == request.auth.uid;
 
-      // صاحب المتجر يستطيع حذف منتجاته
-      allow delete: if isLightoraSeller()
-        && resource.data.sellerId
-          == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+      // البائع يستطيع حذف منتجاته فقط
+      allow delete: if isSeller()
+        && resource.data.sellerId == request.auth.uid;
     }
 
 
@@ -48,39 +43,53 @@ service cloud.firestore {
 
     match /orders/{orderId} {
 
-      // الزبون يستطيع إنشاء الطلب
+      // ===================================================
+      // CREATE ORDER
+      // ===================================================
+      //
+      // الزبون لا يحتاج إلى حساب Firebase.
+      //
+      // نسمح بإنشاء الطلب فقط إذا كان الطلب موجهاً
+      // إلى متجر Lightora / البائع المحدد.
+      //
       allow create: if
         request.resource.data.sellerId
-        == "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+        == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
 
 
-      // صاحب المتجر يستطيع رؤية طلباته
-      allow read: if
-        isLightoraSeller()
-        &&
-        resource.data.sellerId
-        == "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+      // ===================================================
+      // READ ORDERS
+      // ===================================================
+      //
+      // البائع فقط يستطيع رؤية طلباته.
+      //
+      allow read: if isSeller()
+        && resource.data.sellerId == request.auth.uid;
 
 
-      // صاحب المتجر يستطيع تعديل الطلب
-      allow update: if
-        isLightoraSeller()
-        &&
-        resource.data.sellerId
-        == "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+      // ===================================================
+      // UPDATE ORDERS
+      // ===================================================
+      //
+      // البائع فقط يستطيع تعديل طلباته.
+      //
+      allow update: if isSeller()
+        && resource.data.sellerId == request.auth.uid;
 
 
-      // صاحب المتجر يستطيع حذف الطلب
-      allow delete: if
-        isLightoraSeller()
-        &&
-        resource.data.sellerId
-        == "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+      // ===================================================
+      // DELETE ORDERS
+      // ===================================================
+      //
+      // البائع فقط يستطيع حذف طلباته.
+      //
+      allow delete: if isSeller()
+        && resource.data.sellerId == request.auth.uid;
     }
 
 
     // =====================================================
-    // DEFAULT DENY
+    // DENY EVERYTHING ELSE
     // =====================================================
 
     match /{document=**} {
