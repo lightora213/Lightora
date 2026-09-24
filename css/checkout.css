@@ -1219,3 +1219,29 @@ body {
     }
 
 }
+/* =========================
+   CHECKOUT PRODUCT
+========================= */
+
+.checkout-product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.checkout-product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.checkout-product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}

@@ -1,16 +1,24 @@
-import { createOrder } from "./services/orderService.js";
-import { getProduct } from "./services/productService.js";
+import {
+    createOrder
+} from "./services/orderService.js";
+
+import {
+    getProduct
+} from "./services/productService.js";
 
 
 // ======================================================
 // LIGHTORA STORE
 // ======================================================
 
-const LIGHTORA_STORE_ID = "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+const LIGHTORA_STORE_ID =
+    "ozeREirMKKWr0XCC8cpHFTsgm7p2";
 
-const sellerIds = [LIGHTORA_STORE_ID];
+const sellerIds =
+    [LIGHTORA_STORE_ID];
 
-const mainSellerId = LIGHTORA_STORE_ID;
+const mainSellerId =
+    LIGHTORA_STORE_ID;
 
 
 // ======================================================
@@ -18,1126 +26,1628 @@ const mainSellerId = LIGHTORA_STORE_ID;
 // ======================================================
 
 const REDEX_RATES = {
-    "1":  { name: "Adrar", stopDesk: 800, home: 1500 },
-    "2":  { name: "Chlef", stopDesk: 450, home: 750 },
-    "3":  { name: "Laghouat", stopDesk: 550, home: 950 },
-    "4":  { name: "Oum El Bouaghi", stopDesk: 450, home: 750 },
-    "5":  { name: "Batna", stopDesk: 450, home: 750 },
-    "6":  { name: "Béjaïa", stopDesk: 450, home: 750 },
-    "7":  { name: "Biskra", stopDesk: 500, home: 800 },
-    "8":  { name: "Béchar", stopDesk: 800, home: 1400 },
-    "9":  { name: "Blida", stopDesk: 450, home: 750 },
-    "10": { name: "Bouira", stopDesk: 450, home: 750 },
-    "11": { name: "Tamanrasset", stopDesk: 800, home: 800 },
-    "12": { name: "Tébessa", stopDesk: 500, home: 950 },
-    "13": { name: "Tlemcen", stopDesk: 450, home: 750 },
-    "14": { name: "Tiaret", stopDesk: 450, home: 750 },
-    "15": { name: "Tizi Ouzou", stopDesk: 450, home: 700 },
-    "16": { name: "Alger", stopDesk: 400, home: 700 },
-    "17": { name: "Djelfa", stopDesk: 500, home: 800 },
-    "18": { name: "Jijel", stopDesk: 450, home: 750 },
-    "19": { name: "Sétif", stopDesk: 450, home: 700 },
-    "20": { name: "Saïda", stopDesk: 450, home: 750 },
-    "21": { name: "Skikda", stopDesk: 450, home: 750 },
-    "22": { name: "Sidi Bel Abbès", stopDesk: 450, home: 750 },
-    "23": { name: "Annaba", stopDesk: 450, home: 750 },
-    "24": { name: "Guelma", stopDesk: 450, home: 750 },
-    "25": { name: "Constantine", stopDesk: 450, home: 750 },
-    "26": { name: "Médéa", stopDesk: 450, home: 750 },
-    "27": { name: "Mostaganem", stopDesk: 450, home: 750 },
-    "28": { name: "M'Sila", stopDesk: 450, home: 750 },
-    "29": { name: "Mascara", stopDesk: 450, home: 750 },
-    "30": { name: "Ouargla", stopDesk: 550, home: 950 },
-    "31": { name: "Oran", stopDesk: 350, home: 450 },
-    "32": { name: "El Bayadh", stopDesk: 550, home: 950 },
-    "33": { name: "Illizi", stopDesk: null, home: 950 },
-    "34": { name: "Bordj Bou Arreridj", stopDesk: 450, home: 750 },
-    "35": { name: "Boumerdès", stopDesk: 450, home: 750 },
-    "36": { name: "El Tarf", stopDesk: 500, home: 950 },
-    "37": { name: "Tindouf", stopDesk: 800, home: 1700 },
-    "38": { name: "Tissemsilt", stopDesk: 450, home: 750 },
-    "39": { name: "El Oued", stopDesk: 550, home: 950 },
-    "40": { name: "Khenchela", stopDesk: 450, home: 750 },
-    "41": { name: "Souk Ahras", stopDesk: 500, home: 800 },
-    "42": { name: "Tipaza", stopDesk: 450, home: 750 },
-    "43": { name: "Mila", stopDesk: 450, home: 750 },
-    "44": { name: "Aïn Defla", stopDesk: 450, home: 750 },
-    "45": { name: "Naâma", stopDesk: 550, home: 950 },
-    "46": { name: "Aïn Témouchent", stopDesk: 450, home: 750 },
-    "47": { name: "Ghardaïa", stopDesk: 800, home: 1300 },
-    "48": { name: "Relizane", stopDesk: 450, home: 750 },
-    "49": { name: "Timimoun", stopDesk: null, home: 1700 },
-    "50": { name: "Bordj Badji Mokhtar", stopDesk: null, home: 1700 },
-    "51": { name: "Ouled Djellal", stopDesk: null, home: 950 },
-    "52": { name: "Béni Abbès", stopDesk: null, home: 1700 },
-    "53": { name: "In Salah", stopDesk: null, home: 1700 },
-    "54": { name: "In Guezzam", stopDesk: null, home: 1700 },
-    "55": { name: "Touggourt", stopDesk: null, home: 1100 },
-    "56": { name: "Djanet", stopDesk: null, home: 1700 },
-    "57": { name: "El M'Ghair", stopDesk: null, home: 1300 },
-    "58": { name: "El Menia", stopDesk: null, home: 1300 }
+
+    "1": {
+        name: "Adrar",
+        stopDesk: 800,
+        home: 1500
+    },
+
+    "2": {
+        name: "Chlef",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "3": {
+        name: "Laghouat",
+        stopDesk: 550,
+        home: 950
+    },
+
+    "4": {
+        name: "Oum El Bouaghi",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "5": {
+        name: "Batna",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "6": {
+        name: "Béjaïa",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "7": {
+        name: "Biskra",
+        stopDesk: 500,
+        home: 800
+    },
+
+    "8": {
+        name: "Béchar",
+        stopDesk: 800,
+        home: 1400
+    },
+
+    "9": {
+        name: "Blida",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "10": {
+        name: "Bouira",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "11": {
+        name: "Tamanrasset",
+        stopDesk: 800,
+        home: 800
+    },
+
+    "12": {
+        name: "Tébessa",
+        stopDesk: 500,
+        home: 950
+    },
+
+    "13": {
+        name: "Tlemcen",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "14": {
+        name: "Tiaret",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "15": {
+        name: "Tizi Ouzou",
+        stopDesk: 450,
+        home: 700
+    },
+
+    "16": {
+        name: "Alger",
+        stopDesk: 400,
+        home: 700
+    },
+
+    "17": {
+        name: "Djelfa",
+        stopDesk: 500,
+        home: 800
+    },
+
+    "18": {
+        name: "Jijel",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "19": {
+        name: "Sétif",
+        stopDesk: 450,
+        home: 700
+    },
+
+    "20": {
+        name: "Saïda",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "21": {
+        name: "Skikda",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "22": {
+        name: "Sidi Bel Abbès",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "23": {
+        name: "Annaba",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "24": {
+        name: "Guelma",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "25": {
+        name: "Constantine",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "26": {
+        name: "Médéa",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "27": {
+        name: "Mostaganem",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "28": {
+        name: "M'Sila",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "29": {
+        name: "Mascara",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "30": {
+        name: "Ouargla",
+        stopDesk: 550,
+        home: 950
+    },
+
+    "31": {
+        name: "Oran",
+        stopDesk: 350,
+        home: 450
+    },
+
+    "32": {
+        name: "El Bayadh",
+        stopDesk: 550,
+        home: 950
+    },
+
+    "33": {
+        name: "Illizi",
+        stopDesk: null,
+        home: 950
+    },
+
+    "34": {
+        name: "Bordj Bou Arreridj",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "35": {
+        name: "Boumerdès",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "36": {
+        name: "El Tarf",
+        stopDesk: 500,
+        home: 950
+    },
+
+    "37": {
+        name: "Tindouf",
+        stopDesk: 800,
+        home: 1700
+    },
+
+    "38": {
+        name: "Tissemsilt",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "39": {
+        name: "El Oued",
+        stopDesk: 550,
+        home: 950
+    },
+
+    "40": {
+        name: "Khenchela",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "41": {
+        name: "Souk Ahras",
+        stopDesk: 500,
+        home: 800
+    },
+
+    "42": {
+        name: "Tipaza",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "43": {
+        name: "Mila",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "44": {
+        name: "Aïn Defla",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "45": {
+        name: "Naâma",
+        stopDesk: 550,
+        home: 950
+    },
+
+    "46": {
+        name: "Aïn Témouchent",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "47": {
+        name: "Ghardaïa",
+        stopDesk: 800,
+        home: 1300
+    },
+
+    "48": {
+        name: "Relizane",
+        stopDesk: 450,
+        home: 750
+    },
+
+    "49": {
+        name: "Timimoun",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "50": {
+        name: "Bordj Badji Mokhtar",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "51": {
+        name: "Ouled Djellal",
+        stopDesk: null,
+        home: 950
+    },
+
+    "52": {
+        name: "Béni Abbès",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "53": {
+        name: "In Salah",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "54": {
+        name: "In Guezzam",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "55": {
+        name: "Touggourt",
+        stopDesk: null,
+        home: 1100
+    },
+
+    "56": {
+        name: "Djanet",
+        stopDesk: null,
+        home: 1700
+    },
+
+    "57": {
+        name: "El M'Ghair",
+        stopDesk: null,
+        home: 1300
+    },
+
+    "58": {
+        name: "El Menia",
+        stopDesk: null,
+        home: 1300
+    }
 };
 
 
 // ======================================================
-// START AFTER HTML IS LOADED
+// START
 // ======================================================
 
-window.addEventListener("DOMContentLoaded", async () => {
-
-    const customerName =
-        document.getElementById("customerName");
-
-    const phone =
-        document.getElementById("phone");
-
-    const wilaya =
-        document.getElementById("wilaya");
-
-    const address =
-        document.getElementById("address");
-
-    const notes =
-        document.getElementById("notes");
-
-    const checkoutItems =
-        document.getElementById("checkoutItems");
-
-    const checkoutSubtotal =
-        document.getElementById("checkoutSubtotal");
-
-    const checkoutDelivery =
-        document.getElementById("checkoutDelivery");
-
-    const checkoutTotal =
-        document.getElementById("checkoutTotal");
-
-    const placeOrderBtn =
-        document.getElementById("placeOrderBtn");
-
-    const checkoutMessage =
-        document.getElementById("checkoutMessage");
-
-    const homeDeliveryPrice =
-        document.getElementById("homeDeliveryPrice");
-
-    const stopDeskDeliveryPrice =
-        document.getElementById("stopDeskDeliveryPrice");
-
-    const addressGroup =
-        document.getElementById("addressGroup");
+window.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
 
-    // ==================================================
-    // FORMAT PRICE
-    // ==================================================
+        // ==================================================
+        // ELEMENTS
+        // ==================================================
 
-    function formatPrice(price) {
+        const customerName =
+            document.getElementById(
+                "customerName"
+            );
 
-        return Number(price || 0).toLocaleString("fr-FR") + " DA";
+        const phone =
+            document.getElementById(
+                "phone"
+            );
 
-    }
+        const wilaya =
+            document.getElementById(
+                "wilaya"
+            );
+
+        const address =
+            document.getElementById(
+                "address"
+            );
+
+        const notes =
+            document.getElementById(
+                "notes"
+            );
+
+        const checkoutItems =
+            document.getElementById(
+                "checkoutItems"
+            );
+
+        const checkoutSubtotal =
+            document.getElementById(
+                "checkoutSubtotal"
+            );
+
+        const checkoutDelivery =
+            document.getElementById(
+                "checkoutDelivery"
+            );
+
+        const checkoutTotal =
+            document.getElementById(
+                "checkoutTotal"
+            );
+
+        const placeOrderBtn =
+            document.getElementById(
+                "placeOrderBtn"
+            );
+
+        const checkoutMessage =
+            document.getElementById(
+                "checkoutMessage"
+            );
+
+        const homeDeliveryPrice =
+            document.getElementById(
+                "homeDeliveryPrice"
+            );
+
+        const stopDeskDeliveryPrice =
+            document.getElementById(
+                "stopDeskDeliveryPrice"
+            );
+
+        const addressGroup =
+            document.getElementById(
+                "addressGroup"
+            );
 
 
-    // ==================================================
-    // FILL WILAYA SELECT
-    // ==================================================
+        // ==================================================
+        // CHECKOUT VARIABLES
+        // ==================================================
 
-    function initializeWilayas() {
+        let checkoutMode = null;
 
-        if (!wilaya) {
+        let buyNowProduct = null;
 
-            console.error("Element #wilaya introuvable.");
+        let buyNowQuantity = 1;
 
-            return;
+        let cartItems = [];
 
+
+        // ==================================================
+        // FORMAT PRICE
+        // ==================================================
+
+        function formatPrice(price) {
+
+            return Number(
+                price || 0
+            ).toLocaleString(
+                "fr-FR"
+            ) + " DA";
         }
 
 
-        // Nettoyer complètement la liste
-        wilaya.innerHTML = "";
+        // ==================================================
+        // FILL WILAYAS
+        // ==================================================
 
+        function initializeWilayas() {
 
-        // Première option
-        const defaultOption =
-            document.createElement("option");
+            if (!wilaya) {
 
-        defaultOption.value = "";
-
-        defaultOption.textContent =
-            "Sélectionnez votre wilaya";
-
-        defaultOption.selected = true;
-
-        defaultOption.disabled = false;
-
-        wilaya.appendChild(defaultOption);
-
-
-        // Ajouter les 58 wilayas
-        for (let code = 1; code <= 58; code++) {
-
-            const key = String(code);
-
-            const data = REDEX_RATES[key];
-
-
-            if (!data) {
-
-                console.warn(
-                    `Wilaya ${code} absente des tarifs REDEX`
+                console.error(
+                    "Element #wilaya introuvable."
                 );
 
-                continue;
-
+                return;
             }
 
 
-            const option =
-                document.createElement("option");
-
-            option.value = key;
-
-            option.textContent =
-                `${key} - ${data.name}`;
+            wilaya.innerHTML = "";
 
 
-            wilaya.appendChild(option);
+            const defaultOption =
+                document.createElement(
+                    "option"
+                );
 
-        }
+            defaultOption.value =
+                "";
 
+            defaultOption.textContent =
+                "Sélectionnez votre wilaya";
 
-        console.log(
-            "Wilayas chargées :",
-            wilaya.options.length - 1
-        );
+            defaultOption.selected =
+                true;
 
-    }
-
-
-    // ==================================================
-    // GET DELIVERY
-    // ==================================================
-
-    function getSelectedDelivery() {
-
-        const selected =
-            document.querySelector(
-                'input[name="deliveryMethod"]:checked'
+            wilaya.appendChild(
+                defaultOption
             );
 
 
-        if (!selected || !wilaya.value) {
+            for (
+                let code = 1;
+                code <= 58;
+                code++
+            ) {
 
-            return null;
+                const key =
+                    String(code);
 
-        }
-
-
-        const rate =
-            REDEX_RATES[wilaya.value];
-
-
-        if (!rate) {
-
-            return null;
-
-        }
+                const data =
+                    REDEX_RATES[key];
 
 
-        if (selected.value === "home") {
+                if (!data) {
 
-            return {
+                    console.warn(
+                        `Wilaya ${code} absente des tarifs REDEX`
+                    );
 
-                company: "REDEX",
-
-                type: "home",
-
-                typeLabel:
-                    "Livraison à domicile",
-
-                price:
-                    rate.home,
-
-                wilayaCode:
-                    wilaya.value,
-
-                wilayaName:
-                    rate.name
-
-            };
-
-        }
+                    continue;
+                }
 
 
-        if (
-            selected.value === "stopDesk" &&
-            rate.stopDesk !== null
-        ) {
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            return {
+                option.value =
+                    key;
 
-                company: "REDEX",
-
-                type: "stopDesk",
-
-                typeLabel:
-                    "Stop Desk",
-
-                price:
-                    rate.stopDesk,
-
-                wilayaCode:
-                    wilaya.value,
-
-                wilayaName:
-                    rate.name
-
-            };
-
-        }
+                option.textContent =
+                    `${key} - ${data.name}`;
 
 
-        return null;
-
-    }
-
-
-    // ==================================================
-    // UPDATE DELIVERY PRICES
-    // ==================================================
-
-    function updateDeliveryOptions() {
-
-        const rate =
-            REDEX_RATES[wilaya.value];
+                wilaya.appendChild(
+                    option
+                );
+            }
 
 
-        const stopDeskInput =
-            document.querySelector(
-                'input[name="deliveryMethod"][value="stopDesk"]'
+            console.log(
+                "Wilayas chargées :",
+                wilaya.options.length - 1
             );
+        }
 
 
-        if (!rate) {
+        // ==================================================
+        // GET SELECTED DELIVERY
+        // ==================================================
 
-            homeDeliveryPrice.textContent = "—";
+        function getSelectedDelivery() {
 
-            stopDeskDeliveryPrice.textContent = "—";
+            const selected =
+                document.querySelector(
+                    'input[name="deliveryMethod"]:checked'
+                );
 
-            if (stopDeskInput) {
 
-                stopDeskInput.disabled = false;
+            if (
+                !selected ||
+                !wilaya.value
+            ) {
+
+                return null;
+            }
+
+
+            const rate =
+                REDEX_RATES[
+                    wilaya.value
+                ];
+
+
+            if (!rate) {
+
+                return null;
+            }
+
+
+            if (
+                selected.value === "home"
+            ) {
+
+                return {
+
+                    company:
+                        "REDEX",
+
+                    type:
+                        "home",
+
+                    typeLabel:
+                        "Livraison à domicile",
+
+                    price:
+                        rate.home,
+
+                    wilayaCode:
+                        wilaya.value,
+
+                    wilayaName:
+                        rate.name
+                };
+            }
+
+
+            if (
+                selected.value === "stopDesk" &&
+                rate.stopDesk !== null
+            ) {
+
+                return {
+
+                    company:
+                        "REDEX",
+
+                    type:
+                        "stopDesk",
+
+                    typeLabel:
+                        "Stop Desk",
+
+                    price:
+                        rate.stopDesk,
+
+                    wilayaCode:
+                        wilaya.value,
+
+                    wilayaName:
+                        rate.name
+                };
+            }
+
+
+            return null;
+        }
+
+
+        // ==================================================
+        // UPDATE DELIVERY PRICES
+        // ==================================================
+
+        function updateDeliveryOptions() {
+
+            const rate =
+                REDEX_RATES[
+                    wilaya.value
+                ];
+
+
+            const stopDeskInput =
+                document.querySelector(
+                    'input[name="deliveryMethod"][value="stopDesk"]'
+                );
+
+
+            if (!rate) {
+
+                homeDeliveryPrice.textContent =
+                    "—";
+
+                stopDeskDeliveryPrice.textContent =
+                    "—";
+
+
+                if (stopDeskInput) {
+
+                    stopDeskInput.disabled =
+                        false;
+                }
+
+
+                updateAddressField();
+
+                updateCheckoutSummary();
+
+                return;
+            }
+
+
+            /* HOME */
+
+            homeDeliveryPrice.textContent =
+                formatPrice(
+                    rate.home
+                );
+
+
+            /* STOP DESK */
+
+            if (
+                rate.stopDesk === null
+            ) {
+
+                stopDeskDeliveryPrice.textContent =
+                    "Coming Soon";
+
+
+                if (stopDeskInput) {
+
+                    stopDeskInput.disabled =
+                        true;
+
+                    stopDeskInput.checked =
+                        false;
+                }
 
             }
+
+            else {
+
+                stopDeskDeliveryPrice.textContent =
+                    formatPrice(
+                        rate.stopDesk
+                    );
+
+
+                if (stopDeskInput) {
+
+                    stopDeskInput.disabled =
+                        false;
+                }
+            }
+
 
             updateAddressField();
 
             updateCheckoutSummary();
-
-            return;
-
         }
 
 
-        // HOME
-        homeDeliveryPrice.textContent =
-            formatPrice(rate.home);
+        // ==================================================
+        // ADDRESS
+        // ==================================================
+
+        function updateAddressField() {
+
+            const selected =
+                document.querySelector(
+                    'input[name="deliveryMethod"]:checked'
+                );
 
 
-        // STOP DESK
-        if (rate.stopDesk === null) {
+            if (!selected) {
 
-            stopDeskDeliveryPrice.textContent =
-                "Coming Soon";
+                addressGroup.style.display =
+                    "none";
+
+                address.required =
+                    false;
+
+                return;
+            }
 
 
-            if (stopDeskInput) {
+            if (
+                selected.value === "home"
+            ) {
 
-                stopDeskInput.disabled = true;
+                addressGroup.style.display =
+                    "block";
 
-                stopDeskInput.checked = false;
+                address.required =
+                    true;
 
             }
 
-        } else {
+            else {
 
-            stopDeskDeliveryPrice.textContent =
-                formatPrice(rate.stopDesk);
+                addressGroup.style.display =
+                    "none";
+
+                address.required =
+                    false;
+
+                address.value =
+                    "";
+            }
+        }
 
 
-            if (stopDeskInput) {
+        // ==================================================
+        // PRODUCTS TOTAL
+        // ==================================================
 
-                stopDeskInput.disabled = false;
+        function getProductsTotal() {
 
+            if (
+                checkoutMode === "buyNow" &&
+                buyNowProduct
+            ) {
+
+                return (
+                    Number(
+                        buyNowProduct.price || 0
+                    ) *
+                    Number(
+                        buyNowQuantity || 1
+                    )
+                );
             }
 
+
+            if (
+                checkoutMode === "cart"
+            ) {
+
+                return cartItems.reduce(
+                    (
+                        sum,
+                        item
+                    ) => {
+
+                        return sum +
+                            (
+                                Number(
+                                    item.price || 0
+                                ) *
+                                Number(
+                                    item.quantity || 1
+                                )
+                            );
+
+                    },
+                    0
+                );
+            }
+
+
+            return 0;
         }
 
 
-        updateAddressField();
+        // ==================================================
+        // SUMMARY
+        // ==================================================
 
-        updateCheckoutSummary();
+        function updateCheckoutSummary() {
 
-    }
-
-
-    // ==================================================
-    // ADDRESS
-    // ==================================================
-
-    function updateAddressField() {
-
-        const selected =
-            document.querySelector(
-                'input[name="deliveryMethod"]:checked'
-            );
+            const productsTotal =
+                getProductsTotal();
 
 
-        if (!selected) {
+            const delivery =
+                getSelectedDelivery();
 
-            addressGroup.style.display = "none";
 
-            address.required = false;
+            const deliveryPrice =
+                delivery
+                    ? Number(
+                        delivery.price || 0
+                    )
+                    : 0;
 
-            return;
 
+            const total =
+                productsTotal +
+                deliveryPrice;
+
+
+            checkoutSubtotal.textContent =
+                formatPrice(
+                    productsTotal
+                );
+
+
+            checkoutDelivery.textContent =
+                formatPrice(
+                    deliveryPrice
+                );
+
+
+            checkoutTotal.textContent =
+                formatPrice(
+                    total
+                );
         }
 
 
-        if (selected.value === "home") {
+        // ==================================================
+        // RENDER BUY NOW
+        // ==================================================
 
-            addressGroup.style.display = "block";
+        function renderBuyNow() {
 
-            address.required = true;
+            if (!buyNowProduct) {
 
-        } else {
+                checkoutItems.innerHTML =
+                    "<p>Aucun produit sélectionné.</p>";
 
-            addressGroup.style.display = "none";
+                updateCheckoutSummary();
 
-            address.required = false;
+                return;
+            }
 
-            address.value = "";
 
-        }
+            const quantity =
+                Number(
+                    buyNowQuantity || 1
+                );
 
-    }
 
+            const total =
+                Number(
+                    buyNowProduct.price || 0
+                ) *
+                quantity;
 
-    // ==================================================
-    // PRODUCTS TOTAL
-    // ==================================================
 
-    function getProductsTotal() {
+            const image =
+                buyNowProduct.image ||
+                "../images/perfume.jpg";
 
-        if (
-            checkoutMode === "buyNow" &&
-            buyNowProduct
-        ) {
 
-            return (
-                Number(buyNowProduct.price || 0) *
-                Number(buyNowQuantity || 1)
-            );
+            checkoutItems.innerHTML = `
 
-        }
+                <div class="checkout-product">
 
+                    <img
+                        src="${image}"
+                        alt="${buyNowProduct.name || "Produit"}"
+                        class="checkout-product-image"
+                    >
 
-        if (checkoutMode === "cart") {
-
-            return cartItems.reduce(
-                (sum, item) => {
-
-                    return sum +
-                        (
-                            Number(item.price || 0) *
-                            Number(item.quantity || 1)
-                        );
-
-                },
-                0
-            );
-
-        }
-
-
-        return 0;
-
-    }
-
-
-    // ==================================================
-    // SUMMARY
-    // ==================================================
-
-    function updateCheckoutSummary() {
-
-        const productsTotal =
-            getProductsTotal();
-
-
-        const delivery =
-            getSelectedDelivery();
-
-
-        const deliveryPrice =
-            delivery
-                ? Number(delivery.price || 0)
-                : 0;
-
-
-        const total =
-            productsTotal + deliveryPrice;
-
-
-        checkoutSubtotal.textContent =
-            formatPrice(productsTotal);
-
-
-        checkoutDelivery.textContent =
-            formatPrice(deliveryPrice);
-
-
-        checkoutTotal.textContent =
-            formatPrice(total);
-
-    }
-
-
-    // ==================================================
-    // RENDER BUY NOW
-    // ==================================================
-
-    function renderBuyNow() {
-
-        if (!buyNowProduct) {
-
-            checkoutItems.innerHTML =
-                "<p>Aucun produit sélectionné.</p>";
-
-            updateCheckoutSummary();
-
-            return;
-
-        }
-
-
-        const quantity =
-            Number(buyNowQuantity || 1);
-
-
-        const total =
-            Number(buyNowProduct.price || 0) *
-            quantity;
-
-
-        checkoutItems.innerHTML = `
-
-            <div class="checkout-product">
-
-                <div class="checkout-product-info">
-
-                    <strong>
-                        ${buyNowProduct.name || "Produit"}
-                    </strong>
-
-                    <span>
-                        Quantité : ${quantity}
-                    </span>
-
-                </div>
-
-                <strong>
-                    ${formatPrice(total)}
-                </strong>
-
-            </div>
-
-        `;
-
-
-        updateCheckoutSummary();
-
-    }
-
-
-    // ==================================================
-    // RENDER CART
-    // ==================================================
-
-    function renderCart() {
-
-        if (!cartItems.length) {
-
-            checkoutItems.innerHTML =
-                "<p>Votre panier est vide.</p>";
-
-            updateCheckoutSummary();
-
-            return;
-
-        }
-
-
-        checkoutItems.innerHTML =
-            cartItems.map(item => {
-
-                const quantity =
-                    Number(item.quantity || 1);
-
-
-                const total =
-                    Number(item.price || 0) *
-                    quantity;
-
-
-                return `
-
-                    <div class="checkout-product">
-
-                        <div class="checkout-product-info">
-
-                            <strong>
-                                ${item.name || "Produit"}
-                            </strong>
-
-                            <span>
-                                Quantité : ${quantity}
-                            </span>
-
-                        </div>
+                    <div class="checkout-product-info">
 
                         <strong>
-                            ${formatPrice(total)}
+                            ${buyNowProduct.name || "Produit"}
                         </strong>
+
+                        <span>
+                            Quantité : ${quantity}
+                        </span>
+
+                        <span>
+                            Prix unitaire :
+                            ${formatPrice(
+                                buyNowProduct.price
+                            )}
+                        </span>
 
                     </div>
 
-                `;
+                    <strong>
+                        ${formatPrice(total)}
+                    </strong>
 
-            }).join("");
+                </div>
 
-
-        updateCheckoutSummary();
-
-    }
-
-
-    // ==================================================
-    // CHECKOUT VARIABLES
-    // ==================================================
-
-    let checkoutMode = null;
-
-    let buyNowProduct = null;
-
-    let buyNowQuantity = 1;
-
-    let cartItems = [];
+            `;
 
 
-    // ==================================================
-    // LOAD BUY NOW
-    // ==================================================
-
-    async function loadBuyNow() {
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-
-        const productId =
-            params.get("id");
-
-
-        const quantity =
-            Number(
-                params.get("quantity") || 1
-            );
-
-
-        if (!productId) {
-
-            return false;
-
+            updateCheckoutSummary();
         }
 
 
-        try {
+        // ==================================================
+        // RENDER CART
+        // ==================================================
 
-            const product =
-                await getProduct(productId);
+        function renderCart() {
 
+            if (!cartItems.length) {
 
-            if (!product) {
+                checkoutItems.innerHTML =
+                    "<p>Votre panier est vide.</p>";
 
-                checkoutMessage.textContent =
-                    "Produit introuvable.";
+                updateCheckoutSummary();
 
-                return false;
-
+                return;
             }
 
 
-            buyNowProduct = {
+            checkoutItems.innerHTML =
+                cartItems.map(
+                    item => {
 
-                id: productId,
-
-                ...product
-
-            };
-
-
-            buyNowQuantity =
-                quantity > 0
-                    ? quantity
-                    : 1;
+                        const quantity =
+                            Number(
+                                item.quantity || 1
+                            );
 
 
-            checkoutMode =
-                "buyNow";
+                        const total =
+                            Number(
+                                item.price || 0
+                            ) *
+                            quantity;
 
 
-            renderBuyNow();
+                        const image =
+                            item.image ||
+                            "../images/perfume.jpg";
 
 
-            return true;
+                        return `
 
-        } catch (error) {
+                            <div class="checkout-product">
 
-            console.error(error);
+                                <img
+                                    src="${image}"
+                                    alt="${item.name || "Produit"}"
+                                    class="checkout-product-image"
+                                >
 
-            checkoutMessage.textContent =
-                "Impossible de charger le produit.";
+                                <div class="checkout-product-info">
 
-            return false;
+                                    <strong>
+                                        ${item.name || "Produit"}
+                                    </strong>
 
+                                    <span>
+                                        Quantité : ${quantity}
+                                    </span>
+
+                                    <span>
+                                        Prix unitaire :
+                                        ${formatPrice(item.price)}
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    ${formatPrice(total)}
+                                </strong>
+
+                            </div>
+
+                        `;
+                    }
+                ).join("");
+
+
+            updateCheckoutSummary();
         }
 
-    }
+
+        // ==================================================
+        // LOAD BUY NOW
+        // ==================================================
+
+        async function loadBuyNow() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
 
 
-    // ==================================================
-    // LOAD CART
-    // ==================================================
-
-    function loadCart() {
-
-        const storedCart =
-            localStorage.getItem("lightoraCart");
+            const productId =
+                params.get("id");
 
 
-        if (!storedCart) {
+            const quantity =
+                Number(
+                    params.get("quantity") || 1
+                );
 
-            cartItems = [];
 
-        } else {
+            /*
+               BUY NOW MUST HAVE PRODUCT ID
+            */
+
+            if (!productId) {
+
+                return false;
+            }
+
 
             try {
 
-                cartItems =
-                    JSON.parse(storedCart);
+                const product =
+                    await getProduct(
+                        productId
+                    );
 
-                if (!Array.isArray(cartItems)) {
 
-                    cartItems = [];
+                if (!product) {
 
+                    checkoutMessage.textContent =
+                        "Produit introuvable.";
+
+                    return false;
                 }
 
-            } catch {
+
+                buyNowProduct = {
+
+                    id:
+                        productId,
+
+                    ...product
+                };
+
+
+                buyNowQuantity =
+                    quantity > 0
+                        ? quantity
+                        : 1;
+
+
+                checkoutMode =
+                    "buyNow";
+
+
+                renderBuyNow();
+
+
+                return true;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                checkoutMessage.textContent =
+                    "Impossible de charger le produit.";
+
+                return false;
+            }
+        }
+
+
+        // ==================================================
+        // LOAD CART
+        // ==================================================
+
+        function loadCart() {
+
+            /*
+               IMPORTANT:
+               products.js saves the cart
+               using the key "cart".
+            */
+
+            const storedCart =
+                localStorage.getItem(
+                    "cart"
+                );
+
+
+            if (!storedCart) {
 
                 cartItems = [];
 
             }
 
-        }
+            else {
 
+                try {
 
-        checkoutMode =
-            "cart";
+                    cartItems =
+                        JSON.parse(
+                            storedCart
+                        );
 
 
-        renderCart();
-
-    }
-
-
-    // ==================================================
-    // INITIALIZE CHECKOUT
-    // ==================================================
-
-    async function initializeCheckout() {
-
-        const buyNowLoaded =
-            await loadBuyNow();
-
-
-        if (buyNowLoaded) {
-
-            return;
-
-        }
-
-
-        loadCart();
-
-    }
-
-
-    // ==================================================
-    // VALIDATE
-    // ==================================================
-
-    function validateCustomer() {
-
-        const name =
-            customerName.value.trim();
-
-        const customerPhone =
-            phone.value.trim();
-
-
-        if (!name) {
-
-            checkoutMessage.textContent =
-                "Veuillez saisir votre nom complet.";
-
-            customerName.focus();
-
-            return false;
-
-        }
-
-
-        if (!customerPhone) {
-
-            checkoutMessage.textContent =
-                "Veuillez saisir votre numéro de téléphone.";
-
-            phone.focus();
-
-            return false;
-
-        }
-
-
-        if (!wilaya.value) {
-
-            checkoutMessage.textContent =
-                "Veuillez sélectionner votre wilaya.";
-
-            wilaya.focus();
-
-            return false;
-
-        }
-
-
-        const delivery =
-            getSelectedDelivery();
-
-
-        if (!delivery) {
-
-            checkoutMessage.textContent =
-                "Veuillez sélectionner un mode de livraison.";
-
-            return false;
-
-        }
-
-
-        if (
-            delivery.type === "home" &&
-            !address.value.trim()
-        ) {
-
-            checkoutMessage.textContent =
-                "Veuillez saisir votre adresse.";
-
-            address.focus();
-
-            return false;
-
-        }
-
-
-        return true;
-
-    }
-
-
-    // ==================================================
-    // PLACE ORDER
-    // ==================================================
-
-    async function placeOrder() {
-
-        checkoutMessage.textContent = "";
-
-
-        if (!validateCustomer()) {
-
-            return;
-
-        }
-
-
-        let orderItems = [];
-
-
-        if (
-            checkoutMode === "buyNow" &&
-            buyNowProduct
-        ) {
-
-            orderItems = [
-
-                {
-
-                    productId:
-                        buyNowProduct.id,
-
-                    name:
-                        buyNowProduct.name,
-
-                    price:
-                        Number(
-                            buyNowProduct.price || 0
-                        ),
-
-                    quantity:
-                        Number(
-                            buyNowQuantity || 1
+                    if (
+                        !Array.isArray(
+                            cartItems
                         )
+                    ) {
+
+                        cartItems = [];
+                    }
 
                 }
 
-            ];
+                catch {
 
-        }
-
-
-        if (checkoutMode === "cart") {
-
-            orderItems =
-                cartItems.map(item => ({
-
-                    productId:
-                        item.id ||
-                        item.productId,
-
-                    name:
-                        item.name,
-
-                    price:
-                        Number(
-                            item.price || 0
-                        ),
-
-                    quantity:
-                        Number(
-                            item.quantity || 1
-                        )
-
-                }));
-
-        }
-
-
-        if (!orderItems.length) {
-
-            checkoutMessage.textContent =
-                "Votre commande est vide.";
-
-            return;
-
-        }
-
-
-        const delivery =
-            getSelectedDelivery();
-
-
-        const productsTotal =
-            orderItems.reduce(
-                (sum, item) => {
-
-                    return sum +
-                        (
-                            Number(item.price || 0) *
-                            Number(item.quantity || 1)
-                        );
-
-                },
-                0
-            );
-
-
-        const deliveryPrice =
-            Number(delivery.price || 0);
-
-
-        const total =
-            productsTotal +
-            deliveryPrice;
-
-
-        const order = {
-
-            customerName:
-                customerName.value.trim(),
-
-            phone:
-                phone.value.trim(),
-
-            wilaya:
-                wilaya.value,
-
-            address:
-                address.value.trim(),
-
-            notes:
-                notes.value.trim(),
-
-
-            products:
-                orderItems,
-
-
-            productsTotal:
-                productsTotal,
-
-
-            deliveryCompany:
-                "REDEX",
-
-            deliveryType:
-                delivery.type,
-
-            deliveryTypeLabel:
-                delivery.typeLabel,
-
-            deliveryPrice:
-                deliveryPrice,
-
-            deliveryWilayaCode:
-                delivery.wilayaCode,
-
-            deliveryWilayaName:
-                delivery.wilayaName,
-
-
-            sellerId:
-                mainSellerId,
-
-            sellerIds:
-                sellerIds,
-
-
-            total:
-                total,
-
-            status:
-                "Pending"
-
-        };
-
-
-        try {
-
-            placeOrderBtn.disabled = true;
-
-            placeOrderBtn.textContent =
-                "Traitement...";
-
-
-            const orderId =
-                await createOrder(order);
-
-
-            if (checkoutMode === "cart") {
-
-                localStorage.removeItem(
-                    "lightoraCart"
-                );
-
+                    cartItems = [];
+                }
             }
 
 
-            window.location.href =
-                `succes.html?id=${orderId}`;
+            checkoutMode =
+                "cart";
 
 
-        } catch (error) {
-
-            console.error(error);
-
-
-            checkoutMessage.textContent =
-                "Une erreur est survenue. Veuillez réessayer.";
-
-
-            placeOrderBtn.disabled =
-                false;
-
-
-            placeOrderBtn.textContent =
-                "Confirmer la commande";
-
+            renderCart();
         }
 
-    }
+
+        // ==================================================
+        // INITIALIZE CHECKOUT
+        // ==================================================
+
+        async function initializeCheckout() {
+
+            const buyNowLoaded =
+                await loadBuyNow();
 
 
-    // ==================================================
-    // EVENTS
-    // ==================================================
+            if (buyNowLoaded) {
 
-    wilaya.addEventListener(
-        "change",
-        updateDeliveryOptions
-    );
+                return;
+            }
 
 
-    document
-        .querySelectorAll(
-            'input[name="deliveryMethod"]'
-        )
-        .forEach(input => {
+            loadCart();
+        }
 
-            input.addEventListener(
-                "change",
-                () => {
 
-                    updateAddressField();
+        // ==================================================
+        // VALIDATE CUSTOMER
+        // ==================================================
 
-                    updateCheckoutSummary();
+        function validateCustomer() {
 
+            const name =
+                customerName.value.trim();
+
+
+            const customerPhone =
+                phone.value.trim();
+
+
+            if (!name) {
+
+                checkoutMessage.textContent =
+                    "Veuillez saisir votre nom complet.";
+
+                customerName.focus();
+
+                return false;
+            }
+
+
+            if (!customerPhone) {
+
+                checkoutMessage.textContent =
+                    "Veuillez saisir votre numéro de téléphone.";
+
+                phone.focus();
+
+                return false;
+            }
+
+
+            if (!wilaya.value) {
+
+                checkoutMessage.textContent =
+                    "Veuillez sélectionner votre wilaya.";
+
+                wilaya.focus();
+
+                return false;
+            }
+
+
+            const delivery =
+                getSelectedDelivery();
+
+
+            if (!delivery) {
+
+                checkoutMessage.textContent =
+                    "Veuillez sélectionner un mode de livraison.";
+
+                return false;
+            }
+
+
+            if (
+                delivery.type === "home" &&
+                !address.value.trim()
+            ) {
+
+                checkoutMessage.textContent =
+                    "Veuillez saisir votre adresse.";
+
+                address.focus();
+
+                return false;
+            }
+
+
+            return true;
+        }
+
+
+        // ==================================================
+        // PLACE ORDER
+        // ==================================================
+
+        async function placeOrder() {
+
+            checkoutMessage.textContent =
+                "";
+
+
+            if (
+                !validateCustomer()
+            ) {
+
+                return;
+            }
+
+
+            let orderItems = [];
+
+
+            // ==============================================
+            // BUY NOW
+            // ==============================================
+
+            if (
+                checkoutMode === "buyNow" &&
+                buyNowProduct
+            ) {
+
+                orderItems = [
+
+                    {
+
+                        productId:
+                            buyNowProduct.id,
+
+                        name:
+                            buyNowProduct.name,
+
+                        price:
+                            Number(
+                                buyNowProduct.price || 0
+                            ),
+
+                        quantity:
+                            Number(
+                                buyNowQuantity || 1
+                            ),
+
+                        image:
+                            buyNowProduct.image ||
+                            "../images/perfume.jpg"
+                    }
+
+                ];
+            }
+
+
+            // ==============================================
+            // CART
+            // ==============================================
+
+            if (
+                checkoutMode === "cart"
+            ) {
+
+                orderItems =
+                    cartItems.map(
+                        item => ({
+
+                            productId:
+                                item.id ||
+                                item.productId,
+
+                            name:
+                                item.name,
+
+                            price:
+                                Number(
+                                    item.price || 0
+                                ),
+
+                            quantity:
+                                Number(
+                                    item.quantity || 1
+                                ),
+
+                            image:
+                                item.image ||
+                                "../images/perfume.jpg"
+                        })
+                    );
+            }
+
+
+            // ==============================================
+            // EMPTY ORDER
+            // ==============================================
+
+            if (
+                !orderItems.length
+            ) {
+
+                checkoutMessage.textContent =
+                    "Votre commande est vide.";
+
+                return;
+            }
+
+
+            // ==============================================
+            // DELIVERY
+            // ==============================================
+
+            const delivery =
+                getSelectedDelivery();
+
+
+            const productsTotal =
+                orderItems.reduce(
+                    (
+                        sum,
+                        item
+                    ) => {
+
+                        return sum +
+                            (
+                                Number(
+                                    item.price || 0
+                                ) *
+                                Number(
+                                    item.quantity || 1
+                                )
+                            );
+
+                    },
+                    0
+                );
+
+
+            const deliveryPrice =
+                Number(
+                    delivery.price || 0
+                );
+
+
+            const total =
+                productsTotal +
+                deliveryPrice;
+
+
+            // ==============================================
+            // ORDER
+            // ==============================================
+
+            const order = {
+
+                customerName:
+                    customerName.value.trim(),
+
+                phone:
+                    phone.value.trim(),
+
+                wilaya:
+                    wilaya.value,
+
+                address:
+                    address.value.trim(),
+
+                notes:
+                    notes.value.trim(),
+
+
+                products:
+                    orderItems,
+
+
+                productsTotal:
+                    productsTotal,
+
+
+                deliveryCompany:
+                    "REDEX",
+
+                deliveryType:
+                    delivery.type,
+
+                deliveryTypeLabel:
+                    delivery.typeLabel,
+
+                deliveryPrice:
+                    deliveryPrice,
+
+                deliveryWilayaCode:
+                    delivery.wilayaCode,
+
+                deliveryWilayaName:
+                    delivery.wilayaName,
+
+
+                sellerId:
+                    mainSellerId,
+
+                sellerIds:
+                    sellerIds,
+
+
+                total:
+                    total,
+
+                status:
+                    "Pending"
+            };
+
+
+            // ==============================================
+            // CREATE ORDER
+            // ==============================================
+
+            try {
+
+                placeOrderBtn.disabled =
+                    true;
+
+
+                placeOrderBtn.textContent =
+                    "Traitement...";
+
+
+                const orderId =
+                    await createOrder(
+                        order
+                    );
+
+
+                /*
+                   Clear cart only when
+                   the order came from cart.
+                */
+
+                if (
+                    checkoutMode === "cart"
+                ) {
+
+                    localStorage.removeItem(
+                        "cart"
+                    );
+                }
+
+
+                /*
+                   Remove Buy Now data
+                   after successful order.
+                */
+
+                localStorage.removeItem(
+                    "buyNowProduct"
+                );
+
+
+                window.location.href =
+                    `succes.html?id=${orderId}`;
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                checkoutMessage.textContent =
+                    "Une erreur est survenue. Veuillez réessayer.";
+
+
+                placeOrderBtn.disabled =
+                    false;
+
+
+                placeOrderBtn.textContent =
+                    "Confirmer la commande";
+            }
+        }
+
+
+        // ==================================================
+        // EVENTS
+        // ==================================================
+
+        wilaya.addEventListener(
+            "change",
+            updateDeliveryOptions
+        );
+
+
+        document
+            .querySelectorAll(
+                'input[name="deliveryMethod"]'
+            )
+            .forEach(
+                input => {
+
+                    input.addEventListener(
+                        "change",
+                        () => {
+
+                            updateAddressField();
+
+                            updateCheckoutSummary();
+                        }
+                    );
                 }
             );
 
-        });
+
+        placeOrderBtn.addEventListener(
+            "click",
+            placeOrder
+        );
 
 
-    placeOrderBtn.addEventListener(
-        "click",
-        placeOrder
-    );
+        // ==================================================
+        // INITIALIZE
+        // ==================================================
 
+        initializeWilayas();
 
-    // ==================================================
-    // IMPORTANT: LOAD WILAYAS FIRST
-    // ==================================================
+        updateAddressField();
 
-    initializeWilayas();
+        updateCheckoutSummary();
 
-    updateAddressField();
+        await initializeCheckout();
 
-    updateCheckoutSummary();
-
-    await initializeCheckout();
-
-});
+    }
+);

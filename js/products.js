@@ -12,7 +12,6 @@ const params =
         window.location.search
     );
 
-
 const productId =
     params.get("id");
 
@@ -22,79 +21,43 @@ const productId =
 ========================= */
 
 const productImage =
-    document.getElementById(
-        "productImage"
-    );
-
+    document.getElementById("productImage");
 
 const productName =
-    document.getElementById(
-        "productName"
-    );
-
+    document.getElementById("productName");
 
 const productCategory =
-    document.getElementById(
-        "productCategory"
-    );
-
+    document.getElementById("productCategory");
 
 const productPrice =
-    document.getElementById(
-        "productPrice"
-    );
-
+    document.getElementById("productPrice");
 
 const productDescription =
-    document.getElementById(
-        "productDescription"
-    );
-
+    document.getElementById("productDescription");
 
 const productStock =
-    document.getElementById(
-        "productStock"
-    );
-
+    document.getElementById("productStock");
 
 const quantityInput =
-    document.getElementById(
-        "quantity"
-    );
-
+    document.getElementById("quantity");
 
 const decreaseQuantity =
-    document.getElementById(
-        "decreaseQuantity"
-    );
-
+    document.getElementById("decreaseQuantity");
 
 const increaseQuantity =
-    document.getElementById(
-        "increaseQuantity"
-    );
-
+    document.getElementById("increaseQuantity");
 
 const addToCartBtn =
-    document.getElementById(
-        "addToCartBtn"
-    );
+    document.getElementById("addToCartBtn");
 
-    const buyNowBtn =
-    document.getElementById(
-        "buyNowBtn"
-    );
+const buyNowBtn =
+    document.getElementById("buyNowBtn");
 
 const cartCount =
-    document.getElementById(
-        "cartCount"
-    );
-
+    document.getElementById("cartCount");
 
 const maxQuantityMessage =
-    document.getElementById(
-        "maxQuantityMessage"
-    );
+    document.getElementById("maxQuantityMessage");
 
 
 /* =========================
@@ -129,7 +92,6 @@ if (!productId) {
 
     window.location.href =
         "store.html";
-
 }
 
 
@@ -161,7 +123,6 @@ async function loadProduct() {
                 "store.html";
 
             return;
-
         }
 
 
@@ -231,10 +192,8 @@ async function loadProduct() {
         quantityInput.min =
             1;
 
-
         quantityInput.max =
             stock;
-
 
         quantityInput.value =
             stock > 0
@@ -251,34 +210,28 @@ async function loadProduct() {
             quantityInput.value =
                 0;
 
-
             quantityInput.disabled =
                 true;
-
 
             decreaseQuantity.disabled =
                 true;
 
-
             increaseQuantity.disabled =
                 true;
-
 
             addToCartBtn.disabled =
                 true;
 
-                buyNowBtn.disabled =
-    true;
+            buyNowBtn.disabled =
+                true;
 
             addToCartBtn.textContent =
                 "Out of Stock";
-
 
             maxQuantityMessage.textContent =
                 "Maximum available: 0";
 
             return;
-
         }
 
 
@@ -289,23 +242,23 @@ async function loadProduct() {
         quantityInput.disabled =
             false;
 
-
         decreaseQuantity.disabled =
             false;
-
 
         increaseQuantity.disabled =
             false;
 
-
         addToCartBtn.disabled =
             false;
 
-            buyNowBtn.disabled =
-    false;
+        buyNowBtn.disabled =
+            false;
 
         addToCartBtn.textContent =
             "Add to Cart";
+
+        buyNowBtn.textContent =
+            "Buy Now";
 
 
         updateQuantityButtons();
@@ -319,16 +272,12 @@ async function loadProduct() {
             error
         );
 
-
         productName.textContent =
             "Unable to load product";
 
-
         productDescription.textContent =
             "Please try again later.";
-
     }
-
 }
 
 
@@ -344,40 +293,28 @@ decreaseQuantity.addEventListener(
             return;
         }
 
-
         let quantity =
             Number(
                 quantityInput.value
             ) || 1;
-
 
         const stock =
             Number(
                 product.stock || 0
             );
 
-
         if (quantity > 1) {
-
             quantity--;
-
         }
-
 
         if (quantity > stock) {
-
-            quantity =
-                stock;
-
+            quantity = stock;
         }
-
 
         quantityInput.value =
             quantity;
 
-
         updateQuantityButtons();
-
     }
 );
 
@@ -394,44 +331,27 @@ increaseQuantity.addEventListener(
             return;
         }
 
-
         let quantity =
             Number(
                 quantityInput.value
             ) || 1;
-
 
         const stock =
             Number(
                 product.stock || 0
             );
 
-
-        /*
-            DO NOT ALLOW
-            QUANTITY > STOCK
-        */
-
         if (quantity < stock) {
-
             quantity++;
-
         }
-
         else {
-
-            quantity =
-                stock;
-
+            quantity = stock;
         }
-
 
         quantityInput.value =
             quantity;
 
-
         updateQuantityButtons();
-
     }
 );
 
@@ -448,66 +368,37 @@ quantityInput.addEventListener(
             return;
         }
 
-
         const stock =
             Number(
                 product.stock || 0
             );
-
 
         let quantity =
             Number(
                 quantityInput.value
             );
 
-
-        /*
-            EMPTY INPUT
-        */
-
         if (
             quantityInput.value === ""
         ) {
-
             return;
-
         }
-
-
-        /*
-            LESS THAN 1
-        */
 
         if (
             Number.isNaN(quantity) ||
             quantity < 1
         ) {
-
             quantity = 1;
-
         }
 
-
-        /*
-            MORE THAN STOCK
-        */
-
-        if (
-            quantity > stock
-        ) {
-
-            quantity =
-                stock;
-
+        if (quantity > stock) {
+            quantity = stock;
         }
-
 
         quantityInput.value =
             quantity;
 
-
         updateQuantityButtons();
-
     }
 );
 
@@ -524,45 +415,31 @@ quantityInput.addEventListener(
             return;
         }
 
-
         const stock =
             Number(
                 product.stock || 0
             );
-
 
         let quantity =
             Number(
                 quantityInput.value
             );
 
-
         if (
             Number.isNaN(quantity) ||
             quantity < 1
         ) {
-
             quantity = 1;
-
         }
 
-
-        if (
-            quantity > stock
-        ) {
-
-            quantity =
-                stock;
-
+        if (quantity > stock) {
+            quantity = stock;
         }
-
 
         quantityInput.value =
             quantity;
 
-
         updateQuantityButtons();
-
     }
 );
 
@@ -577,35 +454,21 @@ function updateQuantityButtons() {
         return;
     }
 
-
     const stock =
         Number(
             product.stock || 0
         );
-
 
     const quantity =
         Number(
             quantityInput.value
         ) || 1;
 
-
-    /*
-        DISABLE MINUS
-    */
-
     decreaseQuantity.disabled =
         quantity <= 1;
 
-
-    /*
-        DISABLE PLUS
-        WHEN WE REACH STOCK
-    */
-
     increaseQuantity.disabled =
         quantity >= stock;
-
 }
 
 
@@ -621,18 +484,15 @@ addToCartBtn.addEventListener(
             return;
         }
 
-
         const stock =
             Number(
                 product.stock || 0
             );
 
-
         let quantity =
             Number(
                 quantityInput.value
             );
-
 
         /* =========================
            VALIDATE QUANTITY
@@ -644,19 +504,8 @@ addToCartBtn.addEventListener(
             ) ||
             quantity < 1
         ) {
-
             quantity = 1;
-
         }
-
-
-        /*
-            IMPORTANT
-
-            If user somehow enters
-            16 while stock is 15,
-            automatically return to 15.
-        */
 
         if (
             quantity > stock
@@ -665,12 +514,9 @@ addToCartBtn.addEventListener(
             quantity =
                 stock;
 
-
             quantityInput.value =
                 stock;
-
         }
-
 
         if (stock <= 0) {
 
@@ -679,7 +525,6 @@ addToCartBtn.addEventListener(
             );
 
             return;
-
         }
 
 
@@ -694,23 +539,20 @@ addToCartBtn.addEventListener(
             );
 
 
-            if (existing) {
+        if (existing) {
 
-                existing.sellerId =
-                    product.sellerId ||
-                    existing.sellerId ||
-                    null;
-            
-            
-                const newQuantity =
-                    existing.quantity +
-                    quantity;
+            existing.sellerId =
+                product.sellerId ||
+                existing.sellerId ||
+                null;
 
 
-            /*
-                DO NOT ALLOW CART
-                QUANTITY > STOCK
-            */
+            const newQuantity =
+                Number(
+                    existing.quantity || 0
+                ) +
+                quantity;
+
 
             if (
                 newQuantity > stock
@@ -720,12 +562,10 @@ addToCartBtn.addEventListener(
                     stock;
 
             }
-
             else {
 
                 existing.quantity =
                     newQuantity;
-
             }
 
         }
@@ -736,28 +576,26 @@ addToCartBtn.addEventListener(
 
                 id:
                     product.id,
-            
+
                 name:
                     product.name,
-            
+
                 price:
                     Number(
                         product.price || 0
                     ),
-            
+
                 image:
                     product.image ||
                     "../images/perfume.jpg",
-            
+
                 quantity:
                     quantity,
-            
+
                 sellerId:
                     product.sellerId ||
                     null
-            
             });
-
         }
 
 
@@ -795,9 +633,9 @@ addToCartBtn.addEventListener(
             },
             1200
         );
-
     }
 );
+
 
 /* =========================
    BUY NOW
@@ -824,6 +662,10 @@ buyNowBtn.addEventListener(
             );
 
 
+        /* =========================
+           VALIDATE QUANTITY
+        ========================== */
+
         if (
             !Number.isInteger(
                 quantity
@@ -832,7 +674,6 @@ buyNowBtn.addEventListener(
         ) {
 
             quantity = 1;
-
         }
 
 
@@ -840,8 +681,8 @@ buyNowBtn.addEventListener(
             quantity > stock
         ) {
 
-            quantity = stock;
-
+            quantity =
+                stock;
         }
 
 
@@ -852,41 +693,39 @@ buyNowBtn.addEventListener(
             );
 
             return;
-
         }
 
 
-        /*
-           SAVE DIRECT ORDER
-        */
+        /* =========================
+           SAVE BUY NOW PRODUCT
+        ========================== */
 
-           const buyNowProduct = {
+        const buyNowProduct = {
 
             id:
                 product.id,
-        
+
             name:
                 product.name,
-        
+
             price:
                 Number(
                     product.price || 0
                 ),
-        
+
             image:
                 product.image ||
                 "../images/perfume.jpg",
-        
+
             quantity:
                 quantity,
-        
+
             stock:
                 stock,
-        
+
             sellerId:
                 product.sellerId ||
                 null
-        
         };
 
 
@@ -898,9 +737,16 @@ buyNowBtn.addEventListener(
         );
 
 
-        window.location.href =
-            "checkout.html?buyNow=true";
+        /* =========================
+           GO TO CHECKOUT
+           
+           IMPORTANT:
+           SEND PRODUCT ID
+           AND QUANTITY
+        ========================== */
 
+        window.location.href =
+            `checkout.html?id=${encodeURIComponent(product.id)}&quantity=${quantity}`;
     }
 );
 
@@ -932,9 +778,7 @@ function updateCartCount() {
 
         cartCount.textContent =
             count;
-
     }
-
 }
 
 
@@ -949,7 +793,6 @@ function formatPrice(price) {
     ).toLocaleString(
         "en-US"
     ) + " DA";
-
 }
 
 
