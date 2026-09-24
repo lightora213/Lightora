@@ -1,265 +1,348 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Lightora</title>
 
-    <title>Checkout | Lightora</title>
-
-    <link
-        rel="stylesheet"
-        href="../css/global.css">
-
-    <link
-        rel="stylesheet"
-        href="../css/checkout.css">
-
+    <link rel="stylesheet" href="../css/checkout.css">
 </head>
-
 
 <body>
 
+    <header class="checkout-header">
+        <div class="checkout-header-inner">
+            <a href="../index.html" class="checkout-logo">
+                Lightora
+            </a>
 
-<header class="checkout-header">
-
-    <div class="checkout-logo">
-        LIGHTORA
-    </div>
-
-
-    <nav class="checkout-nav">
-
-        <a href="store.html">
-            Home
-        </a>
-
-        <a href="store.html#products">
-            Shop
-        </a>
-
-        <a href="cart.html">
-            🛒 Cart
-            <span id="cartCount">0</span>
-        </a>
-
-    </nav>
-
-</header>
-
-
-
-<main class="checkout-page">
-
-
-    <h1>
-        Checkout
-    </h1>
-
-
-
-    <!-- =========================
-     ORDER
-========================== -->
-
-<section class="checkout-card order-card">
-
-    <div class="section-title">
-
-        <h2>
-            Your Order
-        </h2>
-
-        <p class="order-subtitle">
-            Review your products and adjust quantities before placing your order.
-        </p>
-
-    </div>
-
-
-    <!-- =========================
-         CHECKOUT PRODUCTS
-    ========================== -->
-
-    <div
-        id="checkoutItems"
-        class="checkout-items">
-
-        <div class="loading-checkout">
-
-            Loading your products...
-
+            <div class="checkout-secure">
+                🔒 Paiement à la livraison
+            </div>
         </div>
+    </header>
 
-    </div>
 
+    <main class="checkout-container">
 
-    <!-- =========================
-         TOTAL
-    ========================== -->
-
-    <div class="checkout-total-row">
-
-        <span>
-            Total
-        </span>
-
-        <strong id="checkoutTotal">
-            0 DA
-        </strong>
-
-    </div>
-
-</section>
-
-    <!-- =========================
-         CUSTOMER INFORMATION
-    ========================== -->
-
-    <section class="checkout-card">
-
-        <div class="section-title">
-
-            <h2>
-                Customer Information
-            </h2>
-
+        <div class="checkout-title">
+            <h1>Finaliser votre commande</h1>
+            <p>Remplissez vos informations pour recevoir votre commande.</p>
         </div>
 
 
+        <div class="checkout-layout">
 
-        <form id="checkoutForm">
+            <!-- =========================
+                 LEFT SIDE
+            ========================== -->
+            <section class="checkout-left">
 
+                <!-- CUSTOMER INFO -->
+                <div class="checkout-card">
 
-            <!-- NAME -->
+                    <h2>Informations client</h2>
 
-            <div class="form-group">
+                    <div class="form-group">
+                        <label for="customerName">
+                            Nom complet *
+                        </label>
 
-                <label for="customerName">
-                    Full Name
-                </label>
-
-                <input
-                    type="text"
-                    id="customerName"
-                    placeholder="Your full name"
-                    autocomplete="name"
-                    required>
-
-            </div>
-
-
-
-            <!-- PHONE -->
-
-            <div class="form-group">
-
-                <label for="phone">
-                    Phone Number
-                </label>
-
-                <input
-                    type="tel"
-                    id="phone"
-                    placeholder="05 XX XX XX XX"
-                    autocomplete="tel"
-                    required>
-
-            </div>
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Votre nom complet"
+                            required
+                        >
+                    </div>
 
 
+                    <div class="form-group">
 
-            <!-- WILAYA -->
+                        <label for="phone">
+                            Numéro de téléphone *
+                        </label>
 
-            <div class="form-group">
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="05 / 06 / 07 XX XX XX XX"
+                            required
+                        >
 
-                <label for="wilaya">
-                    Wilaya
-                </label>
-
-                <input
-                    type="text"
-                    id="wilaya"
-                    placeholder="Algiers"
-                    required>
-
-            </div>
+                    </div>
 
 
+                    <div class="form-group">
 
-            <!-- ADDRESS -->
+                        <label for="wilaya">
+                            Wilaya *
+                        </label>
 
-            <div class="form-group">
+                        <select id="wilaya" required>
 
-                <label for="address">
-                    Delivery Address
-                </label>
+                            <option value="">
+                                Sélectionnez votre wilaya
+                            </option>
 
-                <textarea
-                    id="address"
-                    placeholder="Your complete delivery address"
-                    required></textarea>
+                        </select>
 
-            </div>
+                    </div>
 
-
-
-            <!-- NOTES -->
-
-            <div class="form-group">
-
-                <label for="notes">
-                    Notes
-                </label>
-
-                <textarea
-                    id="notes"
-                    placeholder="Optional notes"></textarea>
-
-            </div>
+                </div>
 
 
+                <!-- DELIVERY -->
+                <div class="checkout-card">
 
-            <!-- MESSAGE -->
+                    <div class="delivery-header">
 
-            <div
-                id="checkoutMessage"
-                class="checkout-message">
-            </div>
+                        <div>
+                            <h2>Livraison</h2>
 
+                            <p class="delivery-company">
+                                Livraison avec
+                                <strong>REDEX</strong>
+                            </p>
+                        </div>
 
+                        <span class="delivery-company-badge">
+                            REDEX
+                        </span>
 
-            <!-- PLACE ORDER -->
-
-            <button
-                type="submit"
-                id="placeOrderBtn"
-                class="place-order-btn">
-
-                Place Order
-
-            </button>
-
-
-        </form>
-
-    </section>
+                    </div>
 
 
-</main>
+                    <div
+                        id="deliveryMethodGroup"
+                        class="delivery-methods"
+                    >
+
+                        <!-- HOME -->
+                        <label class="delivery-option">
+
+                            <input
+                                type="radio"
+                                name="deliveryMethod"
+                                value="home"
+                            >
+
+                            <div class="delivery-option-content">
+
+                                <div class="delivery-option-title">
+                                    <span>
+                                        🏠 Livraison à domicile
+                                    </span>
+
+                                    <strong id="homeDeliveryPrice">
+                                        —
+                                    </strong>
+                                </div>
+
+                                <small>
+                                    Livraison directement à votre adresse.
+                                </small>
+
+                            </div>
+
+                        </label>
 
 
+                        <!-- STOP DESK -->
+                        <label class="delivery-option">
 
-<script
-    type="module"
-    src="../js/checkout.js">
-</script>
+                            <input
+                                type="radio"
+                                name="deliveryMethod"
+                                value="stopDesk"
+                            >
 
+                            <div class="delivery-option-content">
+
+                                <div class="delivery-option-title">
+
+                                    <span>
+                                        📦 Stop Desk
+                                    </span>
+
+                                    <strong id="stopDeskDeliveryPrice">
+                                        —
+                                    </strong>
+
+                                </div>
+
+                                <small>
+                                    Récupérez votre commande dans un point
+                                    Stop Desk REDEX.
+                                </small>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+                <div
+                    id="addressGroup"
+                    class="checkout-card"
+                >
+
+                    <h2>Adresse de livraison</h2>
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Adresse complète *
+                        </label>
+
+                        <textarea
+                            id="address"
+                            rows="4"
+                            placeholder="Commune, quartier, rue, numéro..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTES -->
+                <div class="checkout-card">
+
+                    <h2>Note de commande</h2>
+
+                    <div class="form-group">
+
+                        <label for="notes">
+                            Remarque
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="3"
+                            placeholder="Une remarque concernant votre commande..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+                <div
+                    id="checkoutMessage"
+                    class="checkout-message"
+                ></div>
+
+
+                <!-- PLACE ORDER -->
+                <button
+                    type="button"
+                    id="placeOrderBtn"
+                    class="place-order-btn"
+                >
+                    Confirmer la commande
+                </button>
+
+            </section>
+
+
+            <!-- =========================
+                 RIGHT SIDE
+            ========================== -->
+            <aside class="checkout-right">
+
+                <div class="checkout-card order-summary-card">
+
+                    <h2>Votre commande</h2>
+
+
+                    <div
+                        id="checkoutItems"
+                        class="checkout-items"
+                    >
+                        <!-- Products inserted by JS -->
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Produits
+                        </span>
+
+                        <strong id="checkoutSubtotal">
+                            0 DA
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Livraison REDEX
+                        </span>
+
+                        <strong id="checkoutDelivery">
+                            0 DA
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="summary-row total-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong id="checkoutTotal">
+                            0 DA
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECURITY INFO -->
+                <div class="checkout-card checkout-info-card">
+
+                    <h3>
+                        🛡️ Commande sécurisée
+                    </h3>
+
+                    <p>
+                        Vous payez votre commande à la réception.
+                    </p>
+
+                    <p>
+                        Vos informations sont utilisées uniquement
+                        pour traiter votre commande.
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <script type="module" src="../js/checkout.js"></script>
 
 </body>
-
 </html>
