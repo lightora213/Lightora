@@ -4,6 +4,11 @@ import {
     deleteOrder
 } from "./services/orderService.js";
 
+import {
+    auth,
+    onAuthStateChanged
+} from "../firebase.js";
+
 
 /* =========================
    ORDER ID
@@ -118,12 +123,98 @@ if (!orderId) {
 
 
 /* =========================
+   WAIT FOR AUTH
+========================= */
+
+function waitForAuth() {
+
+    return new Promise(
+        function(resolve) {
+
+            /*
+             * إذا كان المستخدم موجوداً
+             * بالفعل فلا داعي للانتظار.
+             */
+
+            if (auth.currentUser) {
+
+                resolve(
+                    auth.currentUser
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * انتظار Firebase حتى ينتهي
+             * من استعادة جلسة تسجيل الدخول.
+             */
+
+            const unsubscribe =
+                onAuthStateChanged(
+                    auth,
+                    function(user) {
+
+                        unsubscribe();
+
+                        resolve(user);
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================
    LOAD ORDER
 ========================= */
 
 async function loadOrder() {
 
     try {
+
+        /* =========================
+           WAIT FOR FIREBASE AUTH
+        ========================== */
+
+        const user =
+            await waitForAuth();
+
+
+        console.log(
+            "Order details user:",
+            user
+                ? user.uid
+                : "No user"
+        );
+
+
+        /* =========================
+           USER NOT LOGGED IN
+        ========================== */
+
+        if (!user) {
+
+            alert(
+                "Please log in first."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* =========================
+           GET ORDER
+        ========================== */
 
         const order =
             await getOrder(
@@ -143,6 +234,12 @@ async function loadOrder() {
             return;
 
         }
+
+
+        console.log(
+            "Order loaded successfully:",
+            order
+        );
 
 
         /* =========================
@@ -275,7 +372,7 @@ function renderProducts(
 
 
     products.forEach(
-        function (product) {
+        function(product) {
 
             const productElement =
                 document.createElement(
@@ -344,7 +441,7 @@ function renderProducts(
 
 completeBtn.addEventListener(
     "click",
-    async function () {
+    async function() {
 
         const confirmed =
             confirm(
@@ -421,7 +518,7 @@ completeBtn.addEventListener(
 
 deleteBtn.addEventListener(
     "click",
-    async function () {
+    async function() {
 
         const confirmed =
             confirm(
@@ -493,7 +590,7 @@ deleteBtn.addEventListener(
 
 backBtn.addEventListener(
     "click",
-    function () {
+    function() {
 
         window.location.href =
             "orders.html";
@@ -527,9 +624,7 @@ function formatDate(
     timestamp
 ) {
 
-    if (
-        !timestamp
-    ) {
+    if (!timestamp) {
 
         return "-";
 
@@ -539,7 +634,8 @@ function formatDate(
     try {
 
         if (
-            timestamp.toDate
+            typeof timestamp.toDate ===
+            "function"
         ) {
 
             return timestamp
