@@ -18,7 +18,7 @@ import {
 // LIGHTORA SELLER
 // ======================================================
 
-// UID حساب البائع الثاني
+// UID حساب البائع الذي يملك متجر Lightora
 const SELLER_UID =
     "ozeREirMKKWr0XCC8cpHFTsgm7p2";
 
@@ -50,10 +50,10 @@ export async function createOrder(order) {
 
 
     /*
-       الزبون لا يحتاج إلى حساب.
+       الزبون لا يحتاج إلى تسجيل الدخول.
 
-       كل طلبية خاصة بمتجر Lightora
-       لذلك نضع UID البائع مباشرة.
+       كل طلبية في متجر Lightora
+       مرتبطة بحساب البائع.
     */
 
     const orderData = {
@@ -121,13 +121,24 @@ export async function getOrders() {
 
     /*
        يجب أن يكون الحساب الحالي
-       هو حساب البائع الثاني.
+       هو حساب بائع Lightora.
     */
 
     if (
         user.uid !==
         SELLER_UID
     ) {
+
+        console.error(
+            "Current Firebase UID:",
+            user.uid
+        );
+
+        console.error(
+            "Expected seller UID:",
+            SELLER_UID
+        );
+
 
         throw new Error(
             "You are not authorized to view orders."
@@ -136,8 +147,14 @@ export async function getOrders() {
     }
 
 
+    console.log(
+        "Loading orders for seller:",
+        SELLER_UID
+    );
+
+
     /*
-       جلب الطلبات الخاصة بهذا البائع فقط.
+       جلب طلبات متجر Lightora فقط.
     */
 
     const ordersQuery =
@@ -155,6 +172,12 @@ export async function getOrders() {
         await getDocs(
             ordersQuery
         );
+
+
+    console.log(
+        "Orders found:",
+        snapshot.size
+    );
 
 
     return snapshot.docs.map(
@@ -192,9 +215,18 @@ export async function getOrder(id) {
         auth.currentUser;
 
 
+    if (!user) {
+
+        throw new Error(
+            "User is not logged in."
+        );
+
+    }
+
+
     if (
-        !user ||
-        user.uid !== SELLER_UID
+        user.uid !==
+        SELLER_UID
     ) {
 
         throw new Error(
@@ -232,8 +264,8 @@ export async function getOrder(id) {
 
 
     /*
-       تأكد أن الطلبية تخص
-       هذا البائع.
+       تأكد أن الطلبية
+       تخص متجر Lightora.
     */
 
     if (
@@ -282,9 +314,18 @@ export async function updateOrder(
         auth.currentUser;
 
 
+    if (!user) {
+
+        throw new Error(
+            "User is not logged in."
+        );
+
+    }
+
+
     if (
-        !user ||
-        user.uid !== SELLER_UID
+        user.uid !==
+        SELLER_UID
     ) {
 
         throw new Error(
@@ -320,7 +361,8 @@ export async function updateOrder(
 
 
     /*
-       لا تسمح بتعديل طلبية بائع آخر.
+       لا تسمح بتعديل طلبية
+       تخص بائعًا آخر.
     */
 
     if (
@@ -393,9 +435,18 @@ export async function deleteOrder(
         auth.currentUser;
 
 
+    if (!user) {
+
+        throw new Error(
+            "User is not logged in."
+        );
+
+    }
+
+
     if (
-        !user ||
-        user.uid !== SELLER_UID
+        user.uid !==
+        SELLER_UID
     ) {
 
         throw new Error(
@@ -432,7 +483,7 @@ export async function deleteOrder(
 
     /*
        لا تسمح بحذف طلبية
-       لا تخص هذا البائع.
+       تخص بائعًا آخر.
     */
 
     if (
