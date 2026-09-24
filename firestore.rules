@@ -1,0 +1,116 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+
+    // =====================================================
+    // PRODUCTS
+    // =====================================================
+
+    match /products/{productId} {
+
+      // المنتجات النشطة يمكن للزوار قراءتها
+      // والبائع يستطيع قراءة منتجاته
+      allow read: if
+        resource.data.status == "active"
+        ||
+        (
+          request.auth != null &&
+          resource.data.sellerId == request.auth.uid
+        );
+
+
+      // إضافة منتج
+      // فقط حساب البائع الخاص بـ Lightora
+      allow create: if
+        request.auth != null &&
+        request.auth.uid == "I7tUxQVRH5e5R0XDVQwSGXb8m6x1" &&
+        request.resource.data.sellerId == request.auth.uid;
+
+
+      // تعديل المنتج
+      allow update: if
+        request.auth != null &&
+        request.auth.uid == resource.data.sellerId &&
+        request.resource.data.sellerId == resource.data.sellerId;
+
+
+      // حذف المنتج
+      allow delete: if
+        request.auth != null &&
+        request.auth.uid == resource.data.sellerId;
+
+    }
+
+
+    // =====================================================
+    // ORDERS
+    // =====================================================
+
+    match /orders/{orderId} {
+
+      // -------------------------------------------------
+      // CREATE ORDER
+      // الزبون لا يحتاج إلى تسجيل الدخول
+      // sellerId يجب أن يكون معرف متجر Lightora
+      // -------------------------------------------------
+
+      allow create: if
+        request.resource.data.sellerId ==
+        "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+
+
+      // -------------------------------------------------
+      // READ ORDERS
+      // البائع فقط يستطيع قراءة طلبات Lightora
+      // -------------------------------------------------
+
+      allow read: if
+        request.auth != null &&
+        request.auth.uid ==
+        "I7tUxQVRH5e5R0XDVQwSGXb8m6x1" &&
+        resource.data.sellerId ==
+        "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+
+
+      // -------------------------------------------------
+      // UPDATE ORDER
+      // -------------------------------------------------
+
+      allow update: if
+        request.auth != null &&
+        request.auth.uid ==
+        "I7tUxQVRH5e5R0XDVQwSGXb8m6x1" &&
+        resource.data.sellerId ==
+        "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+
+
+      // -------------------------------------------------
+      // DELETE ORDER
+      // -------------------------------------------------
+
+      allow delete: if
+        request.auth != null &&
+        request.auth.uid ==
+        "I7tUxQVRH5e5R0XDVQwSGXb8m6x1" &&
+        resource.data.sellerId ==
+        "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+
+    }
+
+
+    // =====================================================
+    // DEFAULT DENY
+    // =====================================================
+
+    match /{document=**} {
+
+      allow read, write: if false;
+
+    }
+
+  }
+
+}

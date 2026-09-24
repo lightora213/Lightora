@@ -14,9 +14,20 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-/* =========================================================
-   COLLECTION
-========================================================= */
+// ======================================================
+// LIGHTORA STORE
+// ======================================================
+
+const LIGHTORA_STORE_ID =
+    "ozeREirMKKWr0XCC8cpHFTsgm7p2";
+
+const SELLER_UID =
+    "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+
+
+// ======================================================
+// COLLECTION
+// ======================================================
 
 const ordersCollection =
     collection(
@@ -25,9 +36,9 @@ const ordersCollection =
     );
 
 
-/* =========================================================
-   CREATE ORDER
-========================================================= */
+// ======================================================
+// CREATE ORDER
+// ======================================================
 
 export async function createOrder(order) {
 
@@ -36,13 +47,12 @@ export async function createOrder(order) {
         ...order,
 
         sellerId:
-            order.sellerId ||
-            null,
+            LIGHTORA_STORE_ID,
 
         sellerIds:
             Array.isArray(order.sellerIds)
                 ? order.sellerIds
-                : [],
+                : [LIGHTORA_STORE_ID],
 
         status:
             order.status ||
@@ -67,14 +77,14 @@ export async function createOrder(order) {
     );
 
 
-    return orderReference;
+    return orderReference.id;
 
 }
 
 
-/* =========================================================
-   GET SELLER ORDERS
-========================================================= */
+// ======================================================
+// GET SELLER ORDERS
+// ======================================================
 
 export async function getOrders() {
 
@@ -91,13 +101,30 @@ export async function getOrders() {
     }
 
 
+    // تأكد أن الحساب هو حساب Lightora
+    if (
+        user.uid !==
+        SELLER_UID
+    ) {
+
+        throw new Error(
+            "You are not authorized to view orders."
+        );
+
+    }
+
+
+    // مهم:
+    // الطلبات محفوظة بـ sellerId الخاص بالمتجر
+    // وليس UID الخاص بحساب Firebase
+
     const ordersQuery =
         query(
             ordersCollection,
             where(
                 "sellerId",
                 "==",
-                user.uid
+                LIGHTORA_STORE_ID
             )
         );
 
@@ -126,15 +153,31 @@ export async function getOrders() {
 }
 
 
-/* =========================================================
-   GET ONE ORDER
-========================================================= */
+// ======================================================
+// GET ONE ORDER
+// ======================================================
 
 export async function getOrder(id) {
 
     if (!id) {
 
         return null;
+
+    }
+
+
+    const user =
+        auth.currentUser;
+
+
+    if (
+        !user ||
+        user.uid !== SELLER_UID
+    ) {
+
+        throw new Error(
+            "You are not authorized to view this order."
+        );
 
     }
 
@@ -162,21 +205,37 @@ export async function getOrder(id) {
     }
 
 
+    const data =
+        snapshot.data();
+
+
+    if (
+        data.sellerId !==
+        LIGHTORA_STORE_ID
+    ) {
+
+        throw new Error(
+            "You are not authorized to view this order."
+        );
+
+    }
+
+
     return {
 
         id:
             snapshot.id,
 
-        ...snapshot.data()
+        ...data
 
     };
 
 }
 
 
-/* =========================================================
-   UPDATE ORDER
-========================================================= */
+// ======================================================
+// UPDATE ORDER
+// ======================================================
 
 export async function updateOrder(
     id,
@@ -196,10 +255,13 @@ export async function updateOrder(
         auth.currentUser;
 
 
-    if (!user) {
+    if (
+        !user ||
+        user.uid !== SELLER_UID
+    ) {
 
         throw new Error(
-            "User is not logged in."
+            "User is not authorized."
         );
 
     }
@@ -232,7 +294,7 @@ export async function updateOrder(
 
     if (
         snapshot.data().sellerId !==
-        user.uid
+        LIGHTORA_STORE_ID
     ) {
 
         throw new Error(
@@ -250,9 +312,9 @@ export async function updateOrder(
 }
 
 
-/* =========================================================
-   UPDATE ORDER STATUS
-========================================================= */
+// ======================================================
+// UPDATE ORDER STATUS
+// ======================================================
 
 export async function updateOrderStatus(
     id,
@@ -271,16 +333,17 @@ export async function updateOrderStatus(
     return await updateOrder(
         id,
         {
-            status: status
+            status:
+                status
         }
     );
 
 }
 
 
-/* =========================================================
-   DELETE ORDER
-========================================================= */
+// ======================================================
+// DELETE ORDER
+// ======================================================
 
 export async function deleteOrder(
     id
@@ -299,10 +362,13 @@ export async function deleteOrder(
         auth.currentUser;
 
 
-    if (!user) {
+    if (
+        !user ||
+        user.uid !== SELLER_UID
+    ) {
 
         throw new Error(
-            "User is not logged in."
+            "User is not authorized."
         );
 
     }
@@ -335,7 +401,7 @@ export async function deleteOrder(
 
     if (
         snapshot.data().sellerId !==
-        user.uid
+        LIGHTORA_STORE_ID
     ) {
 
         throw new Error(
