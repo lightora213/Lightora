@@ -1,4 +1,8 @@
-import { db, auth } from "../../firebase.js";
+import {
+    db,
+    auth,
+    onAuthStateChanged
+} from "../../firebase.js";
 
 import {
     collection,
@@ -23,11 +27,11 @@ const SELLER_UID =
 
 
 // ======================================================
-// SERVICE TEST
+// SERVICE
 // ======================================================
 
 console.log(
-    "========== LIGHTORA ORDER SERVICE V2 =========="
+    "========== LIGHTORA ORDER SERVICE V3 =========="
 );
 
 console.log(
@@ -48,6 +52,94 @@ const ordersCollection =
 
 
 // ======================================================
+// WAIT FOR AUTH
+// ======================================================
+
+function waitForUser() {
+
+    return new Promise(
+        function(resolve) {
+
+            // إذا كان المستخدم موجودًا بالفعل
+            if (auth.currentUser) {
+
+                resolve(
+                    auth.currentUser
+                );
+
+                return;
+
+            }
+
+
+            // Firebase لم ينته بعد من استعادة الجلسة
+            const unsubscribe =
+                onAuthStateChanged(
+                    auth,
+                    function(user) {
+
+                        unsubscribe();
+
+                        resolve(user);
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// GET AUTHORIZED SELLER
+// ======================================================
+
+async function getAuthorizedUser() {
+
+    const user =
+        await waitForUser();
+
+
+    if (!user) {
+
+        throw new Error(
+            "User is not logged in."
+        );
+
+    }
+
+
+    console.log(
+        "Current Firebase UID:",
+        user.uid
+    );
+
+
+    console.log(
+        "Expected seller UID:",
+        SELLER_UID
+    );
+
+
+    if (
+        user.uid !==
+        SELLER_UID
+    ) {
+
+        throw new Error(
+            "You are not authorized to view orders."
+        );
+
+    }
+
+
+    return user;
+
+}
+
+
+// ======================================================
 // CREATE ORDER
 // ======================================================
 
@@ -60,6 +152,14 @@ export async function createOrder(order) {
         );
 
     }
+
+
+    /*
+       الزبون لا يحتاج إلى حساب.
+
+       الطلبية مرتبطة بحساب البائع
+       Lightora.
+    */
 
     const orderData = {
 
@@ -111,57 +211,13 @@ export async function createOrder(order) {
 
 export async function getOrders() {
 
-    const user =
-        auth.currentUser;
-
-
-    if (!user) {
-
-        throw new Error(
-            "User is not logged in."
-        );
-
-    }
-
-
     console.log(
         "========== GET ORDERS =========="
     );
 
-    console.log(
-        "Current Firebase UID:",
-        user.uid
-    );
 
-    console.log(
-        "Expected seller UID:",
-        SELLER_UID
-    );
+    await getAuthorizedUser();
 
-
-    // ==================================================
-    // CHECK SELLER
-    // ==================================================
-
-    if (
-        user.uid !==
-        SELLER_UID
-    ) {
-
-        console.error(
-            "UID MISMATCH!"
-        );
-
-        throw new Error(
-            "You are not authorized to view orders."
-        );
-
-    }
-
-
-    // ==================================================
-    // QUERY ORDERS
-    // ==================================================
 
     const ordersQuery =
         query(
@@ -227,29 +283,24 @@ export async function getOrder(id) {
     }
 
 
-    const user =
-        auth.currentUser;
+    console.log(
+        "========== GET ONE ORDER =========="
+    );
+
+    console.log(
+        "Order ID:",
+        id
+    );
 
 
-    if (!user) {
+    /*
+       مهم جدًا:
 
-        throw new Error(
-            "User is not logged in."
-        );
+       ننتظر Firebase Auth قبل قراءة
+       auth.currentUser.
+    */
 
-    }
-
-
-    if (
-        user.uid !==
-        SELLER_UID
-    ) {
-
-        throw new Error(
-            "You are not authorized to view this order."
-        );
-
-    }
+    await getAuthorizedUser();
 
 
     const orderRef =
@@ -270,6 +321,10 @@ export async function getOrder(id) {
         !snapshot.exists()
     ) {
 
+        console.log(
+            "Order does not exist."
+        );
+
         return null;
 
     }
@@ -278,6 +333,16 @@ export async function getOrder(id) {
     const data =
         snapshot.data();
 
+
+    console.log(
+        "Order data:",
+        data
+    );
+
+
+    /*
+       التأكد أن الطلبية تخص Lightora.
+    */
 
     if (
         data.sellerId !==
@@ -321,29 +386,7 @@ export async function updateOrder(
     }
 
 
-    const user =
-        auth.currentUser;
-
-
-    if (!user) {
-
-        throw new Error(
-            "User is not logged in."
-        );
-
-    }
-
-
-    if (
-        user.uid !==
-        SELLER_UID
-    ) {
-
-        throw new Error(
-            "User is not authorized."
-        );
-
-    }
+    await getAuthorizedUser();
 
 
     const orderRef =
@@ -424,9 +467,7 @@ export async function updateOrderStatus(
 // DELETE ORDER
 // ======================================================
 
-export async function deleteOrder(
-    id
-) {
+export async function deleteOrder(id) {
 
     if (!id) {
 
@@ -437,29 +478,7 @@ export async function deleteOrder(
     }
 
 
-    const user =
-        auth.currentUser;
-
-
-    if (!user) {
-
-        throw new Error(
-            "User is not logged in."
-        );
-
-    }
-
-
-    if (
-        user.uid !==
-        SELLER_UID
-    ) {
-
-        throw new Error(
-            "User is not authorized."
-        );
-
-    }
+    await getAuthorizedUser();
 
 
     const orderRef =

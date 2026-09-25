@@ -10,105 +10,74 @@ import {
 } from "../firebase.js";
 
 
-/* =========================
+/* =====================================================
    ORDER ID
-========================= */
+===================================================== */
 
 const params =
     new URLSearchParams(
         window.location.search
     );
 
-
 const orderId =
     params.get("id");
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
 const orderIdElement =
-    document.getElementById(
-        "orderId"
-    );
-
+    document.getElementById("orderId");
 
 const orderStatus =
-    document.getElementById(
-        "orderStatus"
-    );
-
+    document.getElementById("orderStatus");
 
 const orderDate =
-    document.getElementById(
-        "orderDate"
-    );
-
+    document.getElementById("orderDate");
 
 const orderTotal =
-    document.getElementById(
-        "orderTotal"
-    );
-
+    document.getElementById("orderTotal");
 
 const customerName =
-    document.getElementById(
-        "customerName"
-    );
-
+    document.getElementById("customerName");
 
 const customerPhone =
-    document.getElementById(
-        "customerPhone"
-    );
-
+    document.getElementById("customerPhone");
 
 const customerWilaya =
-    document.getElementById(
-        "customerWilaya"
-    );
-
+    document.getElementById("customerWilaya");
 
 const customerAddress =
-    document.getElementById(
-        "customerAddress"
-    );
-
+    document.getElementById("customerAddress");
 
 const customerNotes =
-    document.getElementById(
-        "customerNotes"
-    );
-
+    document.getElementById("customerNotes");
 
 const orderProducts =
-    document.getElementById(
-        "orderProducts"
-    );
-
+    document.getElementById("orderProducts");
 
 const backBtn =
-    document.getElementById(
-        "backBtn"
-    );
-
+    document.getElementById("backBtn");
 
 const completeBtn =
-    document.getElementById(
-        "completeBtn"
-    );
-
+    document.getElementById("completeBtn");
 
 const deleteBtn =
-    document.getElementById(
-        "deleteBtn"
-    );
+    document.getElementById("deleteBtn");
 
 
-/* =========================
+/* =====================================================
+   SELLER UID
+===================================================== */
+
+const SELLER_UID =
+    "I7tUxQVRH5e5R0XDVQwSGXb8m6x1";
+
+
+/* =====================================================
    CHECK ORDER ID
-========================= */
+===================================================== */
 
 if (!orderId) {
 
@@ -122,9 +91,9 @@ if (!orderId) {
 }
 
 
-/* =========================
-   WAIT FOR AUTH
-========================= */
+/* =====================================================
+   WAIT FOR FIREBASE AUTH
+===================================================== */
 
 function waitForAuth() {
 
@@ -132,34 +101,53 @@ function waitForAuth() {
         function(resolve) {
 
             /*
-             * إذا كان المستخدم موجوداً
-             * بالفعل فلا داعي للانتظار.
+             * إذا كانت جلسة Firebase
+             * موجودة بالفعل
              */
-
             if (auth.currentUser) {
+
+                console.log(
+                    "Auth already ready:",
+                    auth.currentUser.uid
+                );
 
                 resolve(
                     auth.currentUser
                 );
 
                 return;
-
             }
 
 
             /*
-             * انتظار Firebase حتى ينتهي
-             * من استعادة جلسة تسجيل الدخول.
+             * إذا لم تكن جاهزة بعد،
+             * ننتظر Firebase.
              */
+
+            console.log(
+                "Waiting for Firebase authentication..."
+            );
+
 
             const unsubscribe =
                 onAuthStateChanged(
                     auth,
                     function(user) {
 
+                        console.log(
+                            "Firebase auth state:",
+                            user
+                                ? user.uid
+                                : "No user"
+                        );
+
+
                         unsubscribe();
 
-                        resolve(user);
+
+                        resolve(
+                            user
+                        );
 
                     }
                 );
@@ -170,51 +158,116 @@ function waitForAuth() {
 }
 
 
-/* =========================
+/* =====================================================
    LOAD ORDER
-========================= */
+===================================================== */
 
 async function loadOrder() {
 
     try {
 
-        /* =========================
-           WAIT FOR FIREBASE AUTH
-        ========================== */
+        console.log(
+            "================================"
+        );
+
+        console.log(
+            "LOADING ORDER DETAILS"
+        );
+
+        console.log(
+            "Order ID:",
+            orderId
+        );
+
+
+        /* =================================================
+           WAIT FOR AUTH
+        ================================================= */
 
         const user =
             await waitForAuth();
 
 
         console.log(
-            "Order details user:",
+            "Authenticated user:",
             user
                 ? user.uid
-                : "No user"
+                : "NONE"
         );
 
 
-        /* =========================
-           USER NOT LOGGED IN
-        ========================== */
+        /* =================================================
+           CHECK LOGIN
+        ================================================= */
 
         if (!user) {
+
+            console.error(
+                "No authenticated Firebase user."
+            );
+
 
             alert(
                 "Please log in first."
             );
 
+
             window.location.href =
                 "login.html";
+
 
             return;
 
         }
 
 
-        /* =========================
+        /* =================================================
+           CHECK SELLER
+        ================================================= */
+
+        console.log(
+            "Current UID:",
+            user.uid
+        );
+
+        console.log(
+            "Expected UID:",
+            SELLER_UID
+        );
+
+
+        if (
+            user.uid !==
+            SELLER_UID
+        ) {
+
+            console.error(
+                "Seller UID mismatch."
+            );
+
+
+            alert(
+                "You are not authorized to view this order."
+            );
+
+
+            window.location.href =
+                "orders.html";
+
+
+            return;
+
+        }
+
+
+        /* =================================================
            GET ORDER
-        ========================== */
+        ================================================= */
+
+        console.log(
+            "Calling getOrder..."
+        );
+
 
         const order =
             await getOrder(
@@ -222,113 +275,175 @@ async function loadOrder() {
             );
 
 
+        console.log(
+            "Order returned:",
+            order
+        );
+
+
+        /* =================================================
+           ORDER NOT FOUND
+        ================================================= */
+
         if (!order) {
 
             alert(
                 "Order not found."
             );
 
+
             window.location.href =
                 "orders.html";
+
 
             return;
 
         }
 
 
-        console.log(
-            "Order loaded successfully:",
-            order
-        );
-
-
-        /* =========================
+        /* =================================================
            ORDER INFORMATION
-        ========================== */
+        ================================================= */
 
-        orderIdElement.textContent =
-            "#" + order.id;
+        if (orderIdElement) {
 
+            orderIdElement.textContent =
+                "#" + order.id;
 
-        orderStatus.textContent =
-            order.status ||
-            "Pending";
-
-
-        orderTotal.textContent =
-            formatPrice(
-                order.total
-            );
+        }
 
 
-        orderDate.textContent =
-            formatDate(
-                order.createdAt
-            );
+        if (orderStatus) {
+
+            orderStatus.textContent =
+                order.status ||
+                "Pending";
+
+        }
 
 
-        /* =========================
+        if (orderTotal) {
+
+            orderTotal.textContent =
+                formatPrice(
+                    order.total
+                );
+
+        }
+
+
+        if (orderDate) {
+
+            orderDate.textContent =
+                formatDate(
+                    order.createdAt
+                );
+
+        }
+
+
+        /* =================================================
            CUSTOMER INFORMATION
-        ========================== */
+        ================================================= */
 
-        customerName.textContent =
-            order.customerName ||
-            "-";
+        if (customerName) {
 
+            customerName.textContent =
+                order.customerName ||
+                "-";
 
-        customerPhone.textContent =
-            order.phone ||
-            "-";
-
-
-        customerWilaya.textContent =
-            order.wilaya ||
-            "-";
+        }
 
 
-        customerAddress.textContent =
-            order.address ||
-            "-";
+        if (customerPhone) {
+
+            customerPhone.textContent =
+                order.phone ||
+                "-";
+
+        }
 
 
-        customerNotes.textContent =
-            order.notes ||
-            "No notes";
+        if (customerWilaya) {
+
+            customerWilaya.textContent =
+                order.wilaya ||
+                "-";
+
+        }
 
 
-        /* =========================
+        if (customerAddress) {
+
+            customerAddress.textContent =
+                order.address ||
+                "-";
+
+        }
+
+
+        if (customerNotes) {
+
+            customerNotes.textContent =
+                order.notes ||
+                "No notes";
+
+        }
+
+
+        /* =================================================
            PRODUCTS
-        ========================== */
+        ================================================= */
 
         renderProducts(
             order.products || []
         );
 
 
-        /* =========================
-           STATUS BUTTON
-        ========================== */
+        /* =================================================
+           STATUS
+        ================================================= */
 
         if (
             order.status ===
             "Completed"
         ) {
 
-            completeBtn.disabled =
-                true;
+            if (completeBtn) {
 
-            completeBtn.textContent =
-                "✓ Order Completed";
+                completeBtn.disabled =
+                    true;
+
+                completeBtn.textContent =
+                    "✓ Order Completed";
+
+            }
 
         }
+
+
+        console.log(
+            "Order details loaded successfully."
+        );
 
     }
 
     catch (error) {
 
         console.error(
-            "Error loading order:",
+            "================================"
+        );
+
+        console.error(
+            "ERROR LOADING ORDER:"
+        );
+
+        console.error(
             error
+        );
+
+        console.error(
+            "================================"
         );
 
 
@@ -341,13 +456,20 @@ async function loadOrder() {
 }
 
 
-/* =========================
+/* =====================================================
    RENDER PRODUCTS
-========================= */
+===================================================== */
 
 function renderProducts(
     products
 ) {
+
+    if (!orderProducts) {
+
+        return;
+
+    }
+
 
     if (
         !products ||
@@ -384,13 +506,21 @@ function renderProducts(
                 "order-product";
 
 
-            const subtotal =
-                Number(
-                    product.price || 0
-                ) *
+            const quantity =
                 Number(
                     product.quantity || 0
                 );
+
+
+            const price =
+                Number(
+                    product.price || 0
+                );
+
+
+            const subtotal =
+                price *
+                quantity;
 
 
             productElement.innerHTML = `
@@ -406,20 +536,15 @@ function renderProducts(
 
                     <p>
                         Quantity:
-                        ${Number(
-                            product.quantity || 0
-                        )}
+                        ${quantity}
                     </p>
 
                 </div>
 
-
                 <strong>
-
                     ${formatPrice(
                         subtotal
                     )}
-
                 </strong>
 
             `;
@@ -435,173 +560,189 @@ function renderProducts(
 }
 
 
-/* =========================
+/* =====================================================
    COMPLETE ORDER
-========================= */
+===================================================== */
 
-completeBtn.addEventListener(
-    "click",
-    async function() {
+if (completeBtn) {
 
-        const confirmed =
-            confirm(
-                "Mark this order as completed?"
-            );
+    completeBtn.addEventListener(
+        "click",
+        async function() {
 
-
-        if (!confirmed) {
-
-            return;
-
-        }
+            const confirmed =
+                confirm(
+                    "Mark this order as completed?"
+                );
 
 
-        completeBtn.disabled =
-            true;
+            if (!confirmed) {
 
+                return;
 
-        completeBtn.textContent =
-            "Updating...";
-
-
-        try {
-
-            await updateOrderStatus(
-                orderId,
-                "Completed"
-            );
-
-
-            orderStatus.textContent =
-                "Completed";
-
-
-            completeBtn.textContent =
-                "✓ Order Completed";
-
-
-            alert(
-                "Order marked as completed."
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Error completing order:",
-                error
-            );
-
-
-            alert(
-                "Could not update order."
-            );
+            }
 
 
             completeBtn.disabled =
-                false;
+                true;
 
 
             completeBtn.textContent =
-                "✓ Complete Order";
+                "Updating...";
+
+
+            try {
+
+                await updateOrderStatus(
+                    orderId,
+                    "Completed"
+                );
+
+
+                if (orderStatus) {
+
+                    orderStatus.textContent =
+                        "Completed";
+
+                }
+
+
+                completeBtn.textContent =
+                    "✓ Order Completed";
+
+
+                alert(
+                    "Order marked as completed."
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error completing order:",
+                    error
+                );
+
+
+                alert(
+                    "Could not update order."
+                );
+
+
+                completeBtn.disabled =
+                    false;
+
+
+                completeBtn.textContent =
+                    "✓ Complete Order";
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
-/* =========================
+/* =====================================================
    DELETE ORDER
-========================= */
+===================================================== */
 
-deleteBtn.addEventListener(
-    "click",
-    async function() {
+if (deleteBtn) {
 
-        const confirmed =
-            confirm(
-                "Are you sure you want to delete this order?"
-            );
+    deleteBtn.addEventListener(
+        "click",
+        async function() {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to delete this order?"
+                );
 
 
-        if (!confirmed) {
+            if (!confirmed) {
 
-            return;
+                return;
+
+            }
+
+
+            deleteBtn.disabled =
+                true;
+
+
+            deleteBtn.textContent =
+                "Deleting...";
+
+
+            try {
+
+                await deleteOrder(
+                    orderId
+                );
+
+
+                alert(
+                    "Order deleted successfully."
+                );
+
+
+                window.location.href =
+                    "orders.html";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error deleting order:",
+                    error
+                );
+
+
+                alert(
+                    "Could not delete order."
+                );
+
+
+                deleteBtn.disabled =
+                    false;
+
+
+                deleteBtn.textContent =
+                    "🗑 Delete Order";
+
+            }
 
         }
+    );
+
+}
 
 
-        deleteBtn.disabled =
-            true;
+/* =====================================================
+   BACK BUTTON
+===================================================== */
 
+if (backBtn) {
 
-        deleteBtn.textContent =
-            "Deleting...";
-
-
-        try {
-
-            await deleteOrder(
-                orderId
-            );
-
-
-            alert(
-                "Order deleted successfully."
-            );
-
+    backBtn.addEventListener(
+        "click",
+        function() {
 
             window.location.href =
                 "orders.html";
 
         }
+    );
 
-        catch (error) {
-
-            console.error(
-                "Error deleting order:",
-                error
-            );
+}
 
 
-            alert(
-                "Could not delete order."
-            );
-
-
-            deleteBtn.disabled =
-                false;
-
-
-            deleteBtn.textContent =
-                "🗑 Delete Order";
-
-        }
-
-    }
-);
-
-
-/* =========================
-   BACK
-========================= */
-
-backBtn.addEventListener(
-    "click",
-    function() {
-
-        window.location.href =
-            "orders.html";
-
-    }
-);
-
-
-/* =========================
+/* =====================================================
    PRICE FORMAT
-========================= */
+===================================================== */
 
 function formatPrice(
     price
@@ -616,9 +757,9 @@ function formatPrice(
 }
 
 
-/* =========================
+/* =====================================================
    DATE FORMAT
-========================= */
+===================================================== */
 
 function formatDate(
     timestamp
@@ -648,7 +789,8 @@ function formatDate(
 
 
         if (
-            timestamp.seconds
+            timestamp.seconds !==
+            undefined
         ) {
 
             return new Date(
@@ -666,6 +808,12 @@ function formatDate(
 
     catch (error) {
 
+        console.error(
+            "Date formatting error:",
+            error
+        );
+
+
         return "-";
 
     }
@@ -673,9 +821,9 @@ function formatDate(
 }
 
 
-/* =========================
+/* =====================================================
    HTML SAFETY
-========================= */
+===================================================== */
 
 function escapeHTML(
     value
@@ -711,8 +859,8 @@ function escapeHTML(
 }
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 loadOrder();
